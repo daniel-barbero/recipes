@@ -1,0 +1,9 @@
+INSTALATION LOCAL ENV
+----------------------
+
+node -v
+npm install ionic cordova -g
+
+ionic -v
+cordova -v
+

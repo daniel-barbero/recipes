@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Congelador
+          <button ion-button color="tertiary" *ngIf="!showFooterState" (click)="showFooter()" float-right>+</button>
+          <button ion-button color="tertiary" *ngIf="showFooterState" (click)="showFooter()" float-right>-</button>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list [virtualScroll]="listItems" approxItemHeight="50px">
+        <ion-item *virtualItem="let item; let i = index">
+            <img [src]="urlImg + item.categoria + '.jpg'" />
+            <span class="regularFont colorPrimary">{{ item.amount }}</span>
+            <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
+            <button ion-button item-end (click)="removeItem(i)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+        </ion-item>
+    </ion-list>
+  
+</ion-content>
+  
+<ion-footer [ngClass]="{'displayNone': !showFooterState}">
+    <form #f="ngForm" (ngSubmit)="addItem(f)" padding-horizontal>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-10>
+                    <ion-item>
+                        <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
+                    </ion-item>
+
+                    <ion-item class="quantityItem">
+                        <ion-input type="number" name="amount" placeholder="0" ngModel required text-center></ion-input>
+                    </ion-item>
+
+                    <ion-item class="categoryItem">
+                        <ion-label>Categoría</ion-label>
+                        <ion-select name="categoria" placeholder="Categoría" ngModel required text-center>
+                            <ion-option value="Tu">Raciones / Tupper</ion-option>
+                            <ion-option value="Pr">Precocinados</ion-option>
+                            <ion-option value="Ca">Carnes</ion-option>
+                            <ion-option value="Ve">Vegetales</ion-option>
+                            <ion-option value="Pe">Pescados</ion-option>
+                            <ion-option value="Br">Pan</ion-option>
+                        </ion-select>      
+                    </ion-item>
+                </ion-col>
+  
+                <ion-col col-2 no-padding>
+                    <button ion-button color="tertiary" type="submit" block [disabled]="!f.valid" float-right>+</button>
+                </ion-col>
+
+            </ion-row>      
+        </ion-grid>
+      </form>
+</ion-footer>

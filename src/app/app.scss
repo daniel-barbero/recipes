@@ -1,0 +1,262 @@
+// App Global Sass
+// --------------------------------------------------
+// http://ionicframework.com/docs/theming/
+// Put style rules here that you want to apply globally. 
+//---------------------------------------------------
+
+//  TEXT-FORMAT
+.font-medium {
+  font-family: $font-family-base;
+}
+
+.font-bold {
+  font-family: $font-bold;
+}
+
+.font-book {
+  font-family: $font-book;
+}
+
+.smallFont {
+  font-size: 1rem; // 10px
+  line-height: 1.2rem;
+}
+
+.regularFont {
+  font-size: 1.2rem; // 12px
+  line-height: 1.4rem;
+}
+
+.mediumFont {
+  font-size: 1.4rem; // 14px
+  line-height: 1.6rem; 
+}
+
+.titleFont, 
+h2 {
+  font-size: 1.6rem; // 16px
+  line-height: 1.8rem;
+}
+
+.bigFont,
+h1 {
+  font-size: 1.8rem; // 18px
+  line-height: 2rem;
+}
+
+.highlightFont {
+  font-size: 2.2rem; // 22px
+  line-height: 2.4rem;
+}
+
+// ***************************************************************************//
+//          GENERAL CLASSES
+// ***************************************************************************//
+h1, h2, h3, h4, h5, h6,
+strong,
+.boldFont {
+  font-family: $font-bold;
+}
+
+.block {
+  display: block;
+}
+
+.border-top {
+  border-top: .15rem solid color($colors, light);
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+}
+
+.border-bottom {
+  border-bottom: .15rem solid color($colors, light);
+  margin-bottom: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+.border-right {
+  border-right: .15rem solid color($colors, light);
+  margin-right: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+.border-red {
+  border-color: color($colors, danger);
+}
+
+// ICONS 
+.icon15 {
+  height: 1.5rem;
+}
+
+.icon20 {
+  height: 2rem;
+}
+
+.edit-icon {
+  height: 2rem;
+  width:  2rem;
+  margin-left: 1rem;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.prevIcon {
+  margin-right: .5rem;
+  vertical-align: sub;
+}
+
+
+// ***************************************************************************//
+//         COLOR CLASSES
+// ***************************************************************************//
+
+.colorPrimary {
+  color: color($colors, primary);
+}
+
+.colorSecondary {
+  color: color($colors, secondary);
+}
+
+.colorTertiary {
+  color: color($colors, tertiary);
+}
+
+.error {
+  color: color($colors, danger);
+}
+
+.black {
+  color: $color-n0;
+}
+
+.grey {
+  color: $color-n2;
+}
+
+.grey-light {
+  color: $color-n3;
+}
+
+// ***************************************************************************//
+//         GRID  
+// ***************************************************************************//
+
+.grid {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.grid-container {
+  padding-left:  0;
+  padding-right: 0;
+}
+
+.grid ion-row .col:first-child {
+  padding-left: 0;
+}
+
+.grid ion-row .col:last-child {
+  padding-right: 0;
+}
+
+.padding-vertical-medium {
+  padding-top:    .6rem;
+  padding-bottom: .6rem;
+}
+
+[text-nowrap] > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+button[ion-item] .input-cover {
+  display: none;
+}
+
+.displayNone {
+  display: none;
+}
+
+// ***************************************************************************//
+//         MODAL  
+// ***************************************************************************//
+.select-alert .alert-button-group button:nth-child(2),
+.alertOK .alert-button-group button,
+.alertKO .alert-button-group button {
+  width: 6rem;
+
+  .button-inner {
+      display: block;
+      text-align: center;
+  }
+}
+
+.select-alert .alert-button-group button:nth-child(2) {
+  background: $color-theme2;
+  color: #fff;
+}
+
+.alertOK {
+  .alert-title {
+    line-height: 2.4rem;
+    color: $color-theme2;
+  }  
+  .alert-button-group button {
+    background: $color-theme3;
+    color: #fff;
+  }
+}
+
+.alertKO {
+  .alert-title {
+    line-height: 2.4rem;
+    color: color($colors, danger);
+  }
+  .alert-button-group button {
+    background: color($colors, danger);
+    color: #fff;
+  }
+}
+
+// ***************************************************************************//
+//         ACTION SHEET  
+// ***************************************************************************//
+.action-sheet-cancel.action-sheet-button .button-inner {
+  display: block;
+  width: 12rem;
+  padding: 1rem;
+  background: $color-theme4;
+  color: #fff;
+  text-align: center;
+  float: right;
+}
+
+// ***************************************************************************//
+//         CUSTOM  
+// ***************************************************************************//
+
+ion-menu ion-icon {
+  padding-right: 1rem;
+}
+
+.navBarSecondary .toolbar-background-md {
+  background: $color-theme3;
+}
+    
+ion-title [text-wrap] {
+    display: inline-block;
+    line-height: 2.2rem;
+    vertical-align: middle;  
+}
+
+.label-md[stacked] {
+    color: $color-theme2;
+
+    & + .label-md {
+      color: color($colors, dark);
+    }
+}
+

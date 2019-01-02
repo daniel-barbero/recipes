@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Lista de la compra</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form #f="ngForm" (ngSubmit)="addItem(f)" padding-horizontal>
+      <ion-grid>
+          <ion-row>
+              <ion-item ion-col col-8>
+                <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
+              </ion-item>
+
+              <ion-item ion-col col-2>
+                <ion-input type="number" name="amount" placeholder="0" ngModel required text-center></ion-input>
+              </ion-item>
+
+              <ion-col col-2 no-padding>
+                <button ion-button type="submit" block [disabled]="!f.valid" float-right>+</button>
+              </ion-col>
+          </ion-row>      
+      </ion-grid>
+    </form>
+
+    <ion-list [virtualScroll]="listItems" approxItemHeight="50px">
+        <ion-item-sliding *virtualItem="let item; let i = index" #slidingItem>
+            <ion-item>
+                <span class="regularFont colorPrimary">{{ item.amount }}</span>
+                <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
+                <button ion-button item-end (click)="removeItem(i)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+            </ion-item>
+
+            <ion-item-options side="right">
+                <button ion-button color="secondary" (click)="urgentItem(i, item, slidingItem)">
+                    <ion-icon name="md-alarm"></ion-icon> Urgente
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+    <button ion-button block (click)="saveData(listItems)">Guardar lista</button>
+</ion-footer>

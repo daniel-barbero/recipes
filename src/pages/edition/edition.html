@@ -1,0 +1,39 @@
+  <ion-header>
+      <ion-navbar>
+        <ion-title>
+            <ion-icon name="arrow-back" (click)="onClose()"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{ title }}
+        </ion-title>
+      </ion-navbar>
+  </ion-header>
+
+  <ion-content padding>
+      <form #f="ngForm" (ngSubmit)="onAddItem(f)">
+          <ion-item>
+              <!--<ion-label fixed>{{ title }}</ion-label>-->
+              <ion-input type="text" name="itemName" placeholder="Añadir {{ title }}" ngModel required></ion-input>
+              <button ion-button item-end color="primary" type="submit" [disabled]="!f.valid">+</button>                
+          </ion-item>
+          <!--
+          <ion-item *ngIf="title == 'Ingredientes'">
+            <ion-label fixed>Cantidad</ion-label>
+            <ion-input type="number" name="itemAmount" placeholder="Cantidad" ngModel required></ion-input>
+          </ion-item>            
+          -->
+      </form>
+
+      <ion-list reorder="true" side="start" (ionItemReorder)="reorderItems($event)">
+          <ng-container *ngFor="let arrayElement of arrayElements; let i = index">
+              <ion-item text-wrap *ngIf="arrayElement !==''">
+                  {{ arrayElement }}
+                  <ion-icon name="remove-circle" item-end (click)="deleteItem(i)" color="secondary"></ion-icon>
+              </ion-item>
+          </ng-container>
+      </ion-list>
+
+</ion-content>
+
+<ion-footer padding-horizontal>
+    <button ion-button color="tertiary" (click)="onClose()">Cancelar</button>     
+    <button ion-button (click)="saveArrayElements()">Guardar</button>
+</ion-footer>

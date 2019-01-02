@@ -1,0 +1,37 @@
+// COLORS
+// Neutral
+$color-n0: #000;
+$color-n1: #333;
+$color-n2: #868686;
+$color-n3: #d1d1d1; 
+$color-n4: #fafafa;
+
+$color-theme1: #44555c;
+$color-theme2: #5b7778;
+$color-theme3: #89a3a0;
+$color-theme4: #bdd0cc;
+$color-theme5: #e2e8e8;
+
+// FONTS
+@font-face {
+    font-family: "Medium";
+    src:  url("#{$font-path}/Poppins-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Bold";
+    src:  url("#{$font-path}/Cinzel-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Book";
+    src:  url("#{$font-path}/AmaticSC-Bold.ttf") format("truetype");
+}
+
+$font-family-base: 'Medium', sans-serif;
+$font-family-ios-base: $font-family-base;
+$font-family-md-base:  $font-family-base;
+$font-family-wp-base:  $font-family-base;
+
+$font-bold: 'Bold', sans-serif;
+$font-book: 'Book', sans-serif;

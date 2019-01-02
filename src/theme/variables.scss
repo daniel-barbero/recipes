@@ -1,0 +1,59 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+$font-path: "../assets/fonts";
+$app-direction: ltr;
+
+@import "ionic.globals";
+@import '_colors';
+
+// Shared Variables
+// --------------------------------------------------
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+$grid-padding-width : 2rem;
+
+// Named Color Variables
+// --------------------------------------------------
+
+$colors: (
+  primary:    $color-theme1,
+  secondary:  $color-theme3,
+  tertiary:   $color-theme5,
+  danger:     #8f0000,
+  light:      $color-n3,
+  dark:       #222
+);
+
+// App Theme
+// --------------------------------------------------
+
+$text-color:                 $color-n0 !default;
+$link-color:                 color($colors, tertiary) !default;
+$background-color:           #fff !default;
+$subdued-text-color:         $color-n2 !default; //$color-n2
+
+// Set font size
+$font-size-base:               1.2rem;
+$item-md-font-size:            $font-size-base;
+$item-md-body-text-font-size:  $font-size-base;
+
+$content-padding:            1rem !default; 
+$content-margin:             1rem !default;
+
+$list-md-background-color:   transparent;
+$text-input-md-highlight-color-valid: color($colors, tertiary);
+$text-input-md-highlight-color-invalid: color($colors, danger);
+$select-md-icon-color:       color($colors, secondary);
+
+// Custom Theme
+// --------------------------------------------------
+
+$toolbar-md-background:      color($colors, primary);
+$toolbar-md-padding:         0;
+
+// Ionicons
+// --------------------------------------------------
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";

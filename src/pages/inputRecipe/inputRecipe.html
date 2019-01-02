@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ literal }} receta</ion-title> 
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding-bottom padding-horizontal>
+  <ion-img [src]="dataurl"></ion-img>
+
+  <button (click)="openSelectorImage()" ion-button class="btnRound">
+      <ion-icon name="ios-camera"></ion-icon>
+  </button>
+  <p class="smallFont">Recuerda "Editar Receta" para modificar la imagen.</p>
+
+  <form #f="ngForm" (ngSubmit)="saveRecipe(f)" padding-horizontal>
+    <ion-list>
+        <ion-input type="hidden" [(ngModel)]="recipe.id" name="id"></ion-input>
+        <ion-item>
+          <ion-label stacked>Título</ion-label>
+          <ion-input type="text" [(ngModel)]="recipe.title" name="title" placeholder="Título" required></ion-input>
+        </ion-item>
+        
+        <input type="hidden" name="img" [(ngModel)]="recipe.img" />
+        
+        <ion-item *ngIf="noteUser == '1'">
+          <ion-label stacked>Nota&nbsp;&nbsp;&nbsp;<ion-badge>{{ recipe.noteDani }}</ion-badge></ion-label>
+          <ion-range min="1" max="5" [(ngModel)]="recipe.noteDani" name="noteDani" color="secondary">
+              <ion-label range-left>1</ion-label>
+              <ion-label range-right>5</ion-label>
+          </ion-range>
+        </ion-item>
+        <ion-item *ngIf="noteUser == '2'">
+          <ion-label stacked>Nota &nbsp;&nbsp;&nbsp;<ion-badge>{{ recipe.noteDolores }}</ion-badge></ion-label>
+          <ion-range min="1" max="5" [(ngModel)]="recipe.noteDolores" name="noteDolores" color="secondary">
+              <ion-label range-left>1</ion-label>
+              <ion-label range-right>5</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Categoria</ion-label>
+          <ion-select name="category" [(ngModel)]="recipe.category">
+            <ion-option value="lunch">Dinar</ion-option>
+            <ion-option value="supper">Sopar</ion-option>
+            <ion-option value="lunch & supper">Menjar</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <button ion-item type="button" (click)="editIngredients(recipe.ingredients)">
+            <ion-label stacked>Ingredientes</ion-label>
+            <ion-input type="hidden" name="ingredients" [(ngModel)]="recipe.ingredients"></ion-input>
+            <ion-label text-wrap>{{ recipe.ingredients }}</ion-label>
+        </button>
+
+        <button ion-item type="button" (click)="editAdvices(recipe.advices)">
+            <ion-label stacked>Consejos</ion-label>
+            <ion-input type="hidden" name="advices" [(ngModel)]="recipe.advices"></ion-input>
+            <ion-label text-wrap>{{ recipe.advices }}</ion-label>
+        </button>
+    </ion-list>
+
+    <button ion-button block type="submit" color="primary" [disabled]="!f.valid">{{ literal }} Receta</button>
+  </form>
+
+</ion-content>
+
+<ion-footer></ion-footer>     

@@ -1,0 +1,18 @@
+page-edition {
+    button[item-end] {
+        width: 2.5rem;
+    }
+
+    ion-footer {
+        .button-md {
+            width: 48%;
+            display: inline-block;
+            vertical-align: top;
+
+            &:first-child {
+              margin-bottom: 2%;
+              box-shadow: none;
+            }
+        }
+    }
+}

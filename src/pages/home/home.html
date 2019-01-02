@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>      
+      <ion-title>
+        <span>Recetas</span>
+        <ion-searchbar [(ngModel)]="searchTerm" 
+          [formControl]="searchControl" 
+          (ionInput)="onSearchInput(searchTerm)"
+          (ionFocus)="checkFocus()"
+          (ionBlur)="checkFocus()"
+          [ngClass]="{'expanded': searchBar}">
+      </ion-searchbar>        
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list padding-top [virtualScroll]="listRecipe" approxItemHeight="70px">
+      <ion-item-sliding *virtualItem="let recipe" #slidingItem>
+
+          <ion-item (click)="detailRecipe(recipe)">
+                <ion-avatar item-start>
+                    <ng-container *ngIf="recipe.img !='' && recipe.img !== 'NULL'; else defaultImg">
+                        <div [ngStyle]="{'background-image': 'url(' + urlImg + recipe.img + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}">
+                        </div>
+                    </ng-container>
+                    <ng-template #defaultImg>
+                        <img src="../../assets/imgs/noImg.png" />
+                    </ng-template>                  
+                  </ion-avatar>
+              
+              <ion-label text-wrap>{{ recipe.title }}
+                <span class="block colorSecondary">{{ recipe.categoryFormat }}</span>
+              </ion-label>
+              
+              <div item-content>
+                  <ng-container *ngIf="recipe.noteAverage != 'SC'; else SCnote">
+                    <ng-container *ngFor="let star of recipe.noteAverage|timesPipe">
+                      <ion-icon name="star" color="secondary" item-end></ion-icon>  
+                    </ng-container>                
+                  </ng-container>
+                  <ng-template #SCnote>
+                      <ion-badge item-end>SC</ion-badge>
+                  </ng-template>
+              </div>
+          </ion-item>
+
+          <ion-item-options side="right">
+              <button ion-button color="secondary" (click)="onInputRecipe(recipe, slidingItem)">
+                  <ion-icon name="create"></ion-icon> Editar
+                </button>
+              <button ion-button color="danger" (click)="onAlertDelete(recipe.id)">
+                  <ion-icon name="trash"></ion-icon> Borrar
+              </button>
+          </ion-item-options>
+          
+      </ion-item-sliding>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Cargando recetas ..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid no-padding>
+        <ion-row align-items-center justify-content-center>
+            <button ion-col ion-item text-center (click)="goToPage('recipe')">
+                <ion-icon color="primary" name="add-circle"></ion-icon>
+            </button>
+            <button ion-col ion-item text-center (click)="goToPage('cooking')">
+                <ion-icon color="primary" name="ios-list-box"></ion-icon>
+            </button>
+            <button ion-col ion-item text-center (click)="goToPage('fridge')">
+                <ion-icon color="primary" name="snow"></ion-icon>
+            </button>
+            <button ion-col ion-item text-center (click)="goToPage('store')">
+                <ion-icon color="primary" name="cart"></ion-icon>
+            </button>
+        </ion-row>
+    </ion-grid>    
+  </ion-toolbar>
+</ion-footer>

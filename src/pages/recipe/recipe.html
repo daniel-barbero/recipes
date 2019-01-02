@@ -1,0 +1,32 @@
+  <ion-header>
+    <ion-navbar class="navBarSecondary">
+      <ion-title>
+        <!--<ion-icon name="arrow-back" (click)="onClose()"></ion-icon>&nbsp;&nbsp;&nbsp;-->
+        <span text-wrap class="font-bold">{{ recipe.title }}</span>
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+      <ion-img [src]="urlImg + recipe.img"></ion-img>
+
+      <ion-item>
+          <span class="font-book colorSecondary">{{ recipe.category }}</span>
+          <ion-badge color="primary">{{ recipe.noteDani }}</ion-badge>
+          <ion-badge color="secondary">{{ recipe.noteDolores }}</ion-badge>            
+          <button ion-button item-end [navPush]="inputRecipe" [navParams]="recipe">Editar</button>
+      </ion-item>
+      
+      <ul>
+        <ng-container>
+            <li *ngFor="let ingredient of recipe.mainIngredient">{{ ingredient.name }}</li>
+            <!-- {{ ingredient.amount}}</li>-->     
+        </ng-container>
+      </ul> 
+      
+      <ol>
+        <ng-container *ngFor="let advice of recipe.advice">
+            <li *ngIf="advice.step !=''">{{ advice.step }}</li>
+        </ng-container>
+      </ol>
+  </ion-content>

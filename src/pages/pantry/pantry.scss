@@ -1,0 +1,97 @@
+page-pantry {
+    .scroll-content {
+        background: url('../../assets/imgs/bg-pantry.png') no-repeat;
+        background-size: 100%;
+        background-position: bottom;
+    }
+
+    ion-title .button-md {
+        width: 2.7rem;
+        height: 2.7rem;
+        margin-bottom: 0;
+    }
+
+    input::-webkit-input-placeholder,
+    .select-placeholder {
+        color:#ccc !important;
+    }
+  
+    .grid {
+
+        [col-10] {
+            padding: 0;
+        }
+
+        .quantityItem {
+            display: inline-block;
+            width: 30%;
+        }
+
+        .categoryItem {
+            display: inline-block;
+            width: 68%;
+            
+            .item-inner {
+                padding-right: 0;
+                background: #536369;
+            }
+        }
+
+        .select-md {
+            max-width: 100%;
+            width: 100%;
+            padding: 0;
+            .select-icon { width: 1.8rem;}
+        }
+
+        .text-input-md, 
+        .select-text {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .button-block-md,
+        .button-block-ios {
+            width: 3.6rem;
+            height: 8rem;
+            margin: 1rem 0;
+        }
+    }
+
+    ion-footer {
+        background: color($colors, primary);
+    }
+
+    ion-list {
+        img {
+            width: 2rem;
+            height: 2rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 1rem;
+        }
+        .item-md {
+            .bold {
+              font-weight: 700;
+            }
+
+            .label img + span {
+                display: inline-block;
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+                border-radius: 50%;
+                background: color($colors, tertiary);
+                text-align: center;
+                line-height: 2.2rem;
+            }
+
+            ion-icon[item-end] {
+                font-size: 2.2rem;
+                color: $color-theme3;
+            }
+        }
+    }
+
+}

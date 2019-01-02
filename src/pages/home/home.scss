@@ -1,0 +1,98 @@
+page-home {
+    .toolbar-title-md > span {
+        line-height: 3.4rem;
+    }
+    .searchbar-md {
+        width: 30%;
+        float: right;
+        transition: width 1s;
+
+        &.expanded {
+            width: 60%;
+        }
+        .searchbar-search-icon {
+            top: 5px; left: 6px;
+        }
+        .searchbar-input {
+            padding: 0px 6px 0px 30px;
+            font-size: 1rem;
+        }
+    }
+
+    ion-content {
+
+        &:before {
+            content: '';
+            position: fixed;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: url('../../assets/imgs/bg-pattern.jpg');
+            top: -2rem; 
+            right: 0;
+            opacity: .06;
+        }
+
+        ion-list {
+            margin-bottom: 1rem;
+            
+            .item-wrapper.active-slide .item-md {
+                background: #fff;
+            }
+
+            .item-md {
+                padding-left: 0;
+
+                ion-avatar[item-start] {
+                    margin-top: 0;
+                    margin-bottom: 0;
+
+                    div, img {
+                        width: 7rem;
+                        height: 7rem;
+                        border-radius: 0;
+                        margin: .075rem;                    
+                    }
+                }
+
+                ion-label {
+                    font-size: 1.4rem;
+                    line-height: 1.6rem;
+                }
+
+                ion-icon[item-end] {
+                    margin: 0;
+                }
+            } 
+        }
+     
+    }
+
+    ion-footer {
+        &.footer-md::before {
+            opacity: .5;
+        }
+        .item-md.item-block:first-child .item-inner {
+            border-left: 1px solid $color-theme4;
+        }
+
+        .item-md.item-block .item-inner {
+            padding-right: 0;
+            background-color: #fff;
+            border-right: 1px solid $color-theme4;
+        }
+
+        .toolbar-content-md {
+            margin-bottom: 1rem;
+        }
+
+        .row {
+            border-top: 1px solid $color-theme4;
+
+            .label-md {
+                margin-right: 0;
+            }
+        }
+
+    }
+}

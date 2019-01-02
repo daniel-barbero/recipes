@@ -1,4 +1,9 @@
 page-shopping-list {
+  .scroll-content {
+      background: url('../../assets/imgs/cart.png') no-repeat;
+      background-size: 100%;
+      background-position: bottom;
+  }
 
   .grid {
       margin: 1rem 0;
@@ -7,7 +12,7 @@ page-shopping-list {
       border-radius: 0.4rem;
 
       .item-block {
-        min-height: inherit;
+          min-height: inherit;
       }
 
       .item-md.item-block .item-inner {

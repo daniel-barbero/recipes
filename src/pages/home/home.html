@@ -43,15 +43,15 @@
       <ion-item-sliding *virtualItem="let recipe; let i = index" #slidingItem>
 
           <ion-item (click)="detailRecipe(recipe)">
-                <ion-avatar item-start>
-                    <ng-container *ngIf="recipe.img !='' && recipe.img !== 'NULL'; else defaultImg">
-                        <div [ngStyle]="{'background-image': 'url(' + urlImg + recipe.img + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}">
-                        </div>
-                    </ng-container>
-                    <ng-template #defaultImg>
-                        <img src="../../assets/imgs/noImg.png" />
-                    </ng-template>                  
-                  </ion-avatar>
+              <ion-avatar item-start>
+                  <ng-container *ngIf="recipe.img !='' && recipe.img !== 'NULL'; else defaultImg">
+                      <div [ngStyle]="{'background-image': 'url(' + urlImg + recipe.img + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}">
+                      </div>
+                  </ng-container>
+                  <ng-template #defaultImg>
+                      <img src="../../assets/imgs/noImg.png" />
+                  </ng-template>                  
+              </ion-avatar>
               
               <ion-label text-wrap><span class="grey">{{i+1}}. </span>{{ recipe.title }}
                 <span class="block colorSecondary">{{ recipe.category }}</span>

@@ -24,7 +24,6 @@ export class HomePage {
     public infiniteEnabled: boolean = true;
     reActiveInfinite: any;
 
-
     searchTerm: string = '';
     searchControl: FormControl;
     searchBar: boolean = false;
@@ -38,13 +37,10 @@ export class HomePage {
     }
 
     ionViewWillEnter() {
-        console.log('ionViewWillEnter HOME');
-        
+        // console.log('ionViewWillEnter HOME');
         if (APPCONFIG.reloadList){
-            console.log('reloadList');
-            if ( this.page > -1) { 
+            if ( this.page > -1 && this.reActiveInfinite != undefined) { 
               this.reActiveInfinite.enable(true);
-              console.log('page > -1');
             }
             this.onLoadData();   
         }
@@ -56,20 +52,19 @@ export class HomePage {
         console.log('onLoadData FUNCTION: ' +  APPCONFIG.reloadList);
         this.listRecipe = [];
         this.page = ( limit == 'all')? 9999 : 0;
-        console.log(limit);
         
         let loadingSpinner = this.loadingController.create({
           content: "Cargando"
         });
         loadingSpinner.present();
         
-        console.log(this.page + ' - ' + this.category);
+        console.log('page: ' + this.page + ' - category: ' + this.category);
         this.recipesProvider.getRecipes(this.page, this.category)
         .subscribe(
             result => {
                 if (typeof result === 'string'){
                     loadingSpinner.dismiss();
-                    console.log(result);
+                    // console.log(result);
                     this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                 }
                 else {
@@ -88,7 +83,6 @@ export class HomePage {
                     );
                     APPCONFIG.reloadList = false;
                     loadingSpinner.dismiss();
-                    console.log(this.listRecipe);
                 }
             },
             error => {
@@ -113,7 +107,6 @@ export class HomePage {
            .subscribe(
             result => {
               if (typeof result === 'string'){
-                  console.log(result);
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
@@ -136,14 +129,13 @@ export class HomePage {
                   else {
                       infiniteScroll.enable(false);
                   }
-                  
               }
           },
           error => {
               this.onAlertError(error);
           });
           
-          console.log('Async operation has ended');
+          //console.log('Async operation has ended');
           infiniteScroll.complete();
       }, 500);
     }
@@ -151,6 +143,9 @@ export class HomePage {
     setCategory(category: string){
         this.category = (this.category == category) ? 'all' : category;
         this.onLoadData();
+        if (this.reActiveInfinite != undefined) { 
+          this.reActiveInfinite.enable(true);
+        }
     }
 
     onSearchInput(searchTerm){

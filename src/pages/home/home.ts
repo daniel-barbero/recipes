@@ -19,9 +19,11 @@ import { Recipe } from '../../models/recipe.model';
 export class HomePage {
     private page: number = -1;
     private listRecipe = [];
+    public category = 'all';
     public urlImg = "http://recetas.danielbarbero.es/img/";
     public infiniteEnabled: boolean = true;
     reActiveInfinite: any;
+
 
     searchTerm: string = '';
     searchControl: FormControl;
@@ -37,7 +39,6 @@ export class HomePage {
 
     ionViewWillEnter() {
         console.log('ionViewWillEnter HOME');
-        console.log(this.listRecipe);
         
         if (APPCONFIG.reloadList){
             console.log('reloadList');
@@ -62,7 +63,8 @@ export class HomePage {
         });
         loadingSpinner.present();
         
-        this.recipesProvider.getRecipes(this.page)
+        console.log(this.page + ' - ' + this.category);
+        this.recipesProvider.getRecipes(this.page, this.category)
         .subscribe(
             result => {
                 if (typeof result === 'string'){
@@ -78,7 +80,6 @@ export class HomePage {
                                                   element.ingredients,
                                                   element.advices,
                                                   element.category,
-                                                  element.categoryFormat,
                                                   element.img,
                                                   element.noteDani,
                                                   element.noteDolores, 
@@ -108,7 +109,7 @@ export class HomePage {
       
       setTimeout(() => {
         console.log('doInfinite - page: ' + this.page);
-        this.recipesProvider.getRecipes(this.page)
+        this.recipesProvider.getRecipes(this.page, this.category)
            .subscribe(
             result => {
               if (typeof result === 'string'){
@@ -125,7 +126,6 @@ export class HomePage {
                                                     element.ingredients,
                                                     element.advices,
                                                     element.category,
-                                                    element.categoryFormat,
                                                     element.img,
                                                     element.noteDani,
                                                     element.noteDolores, 
@@ -148,6 +148,11 @@ export class HomePage {
       }, 500);
     }
     
+    setCategory(category: string){
+        this.category = (this.category == category) ? 'all' : category;
+        this.onLoadData();
+    }
+
     onSearchInput(searchTerm){
         console.log('onSearchInput FUNCTION');
         if ( searchTerm.length < 1 ){
@@ -159,8 +164,7 @@ export class HomePage {
             this.infiniteEnabled = false;
             setTimeout(() => {
               this.listRecipe = this.listRecipe.filter((recipe:Recipe) => {
-                  return recipe.categoryFormat != undefined && recipe.categoryFormat.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-                  || recipe.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 
+                  return recipe.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 
                   || recipe.ingredients.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
               });
             }, 500);     

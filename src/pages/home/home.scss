@@ -2,6 +2,7 @@ page-home {
     .toolbar-title-md > span {
         line-height: 3.4rem;
     }
+
     .searchbar-md {
         width: 30%;
         float: right;
@@ -32,6 +33,22 @@ page-home {
             right: 0;
             opacity: .06;
         }
+
+        .scroll-content .toolbar-md-secondary {
+            min-height: 3.5rem;
+
+            .button-md {
+                font-size: 1.2rem;
+                border-right: 1px solid #fff;
+                background: transparent;
+                box-shadow: none;
+
+                &.activeButton {
+                    background: $color-theme2;
+                }
+            }
+        }
+
 
         ion-list {
             margin-bottom: 1rem;

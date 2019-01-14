@@ -7,7 +7,6 @@ export interface RecipeInterface {
     ingredients: string;
     advices: string;
     category: string;
-    categoryFormat: string;
     img: string;
     noteDani: string;
     noteDolores: string;
@@ -22,7 +21,6 @@ export class Recipe implements RecipeInterface {
     private _ingredients = '';
     private _advices = '';
     private _category = '';
-    private _categoryFormat = '';
     private _img = '';
     private _noteDani = '';
     private _noteDolores = '';
@@ -44,22 +42,6 @@ export class Recipe implements RecipeInterface {
 
     get category(): string { return this._category; }
     set category(category: string) { this._category = (category != null) ? category : ""; }
-
-    get categoryFormat(): string { return this._categoryFormat; }
-    set categoryFormat(categoryFormat: string) { 
-        if ( this.category == 'lunch') {
-          this._categoryFormat = 'Dinar';
-        }
-        else if ( this.category == 'supper'){
-          this._categoryFormat = 'Sopar'; 
-        }
-        else if ( this.category == 'lunch & supper'){
-          this._categoryFormat = 'Menjar'; 
-        }
-        else {
-          this._categoryFormat = categoryFormat;
-        }
-    }
 
     get img(): string { return this._img; }
     set img(img: string) { this._img = (img != null) ? img : ""; }
@@ -115,7 +97,6 @@ export class Recipe implements RecipeInterface {
         ingredients?: string,
         advices?: string,
         category?: string,
-        categoryFormat?: string,
         img?: string,
         noteDani?: string,
         noteDolores?: string,
@@ -128,7 +109,6 @@ export class Recipe implements RecipeInterface {
         this.ingredients = ingredients;
         this.advices = advices;
         this.category = category;
-        this.categoryFormat = categoryFormat;
         this.img = img;
         this.noteDani = noteDani;
         this.noteDolores = noteDolores;

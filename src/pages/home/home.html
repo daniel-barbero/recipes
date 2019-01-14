@@ -17,9 +17,30 @@
 </ion-header>
 
 <ion-content>
+  <ion-toolbar color="secondary">
+      <ion-grid no-padding>
+          <ion-row align-items-center justify-content-center>
+              <button ion-col ion-button (click)="setCategory('cuchara')" [ngClass]="{'activeButton': category == 'cuchara'}">
+                  Cuchara
+              </button>
+              <button ion-col ion-button (click)="setCategory('carne')" [ngClass]="{'activeButton': category == 'carne'}">
+                  Carne
+              </button>
+              <button ion-col ion-button (click)="setCategory('pescado')" [ngClass]="{'activeButton': category == 'pescado'}">
+                  Pescado
+              </button>
+              <button ion-col ion-button (click)="setCategory('verdura')" [ngClass]="{'activeButton': category == 'verdura'}">
+                  Verdura
+              </button>
+              <button ion-col ion-button (click)="setCategory('pasta')" [ngClass]="{'activeButton': category == 'pasta'}">
+                  Pasta
+              </button>
+          </ion-row>
+      </ion-grid>    
+  </ion-toolbar>
 
   <ion-list padding-top [virtualScroll]="listRecipe" approxItemHeight="70px">
-      <ion-item-sliding *virtualItem="let recipe" #slidingItem>
+      <ion-item-sliding *virtualItem="let recipe; let i = index" #slidingItem>
 
           <ion-item (click)="detailRecipe(recipe)">
                 <ion-avatar item-start>
@@ -32,8 +53,8 @@
                     </ng-template>                  
                   </ion-avatar>
               
-              <ion-label text-wrap>{{ recipe.title }}
-                <span class="block colorSecondary">{{ recipe.categoryFormat }}</span>
+              <ion-label text-wrap><span class="grey">{{i+1}}. </span>{{ recipe.title }}
+                <span class="block colorSecondary">{{ recipe.category }}</span>
               </ion-label>
               
               <div item-content>

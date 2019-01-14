@@ -16,8 +16,8 @@ export class RecipesProvider {
         console.log('Hello RecipesProvider Provider');
     }
 
-    getRecipes(page:number): Observable<any>{
-        return this.http.get(APPCONFIG.API+'recipes/'+page).map(response => response.json())
+    getRecipes(page:number, category:string): Observable<any>{
+        return this.http.get(APPCONFIG.API+'recipes/'+category+'/'+page).map(response => response.json())
         .catch((error:any) => Observable.throw(error || 'server error'));
     }
 

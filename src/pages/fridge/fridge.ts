@@ -68,6 +68,26 @@ export class FridgePage {
       this.loadItems();
   }
 
+  updateItem(index: number, item: Ingredient, action: string) {
+      console.log(item.amount);
+      let calculate: number;
+      if ( action == 'more'){
+        calculate = parseInt(item.amount, 10) +1;
+      }
+      else {
+        calculate = parseInt(item.amount, 10) -1;
+        if ( calculate == 0) {
+          this.removeItem(index);
+          return false;
+        }
+      }
+      
+      item.amount = calculate.toString();
+      console.log(item.amount);
+      this.slService.updateItem(index, item);
+      this.listModified = true;
+  }
+
   loadItems() {
       this.listItems = this.slService.getItems();
       console.log(this.listItems);

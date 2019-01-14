@@ -24,10 +24,12 @@ export class RecipePage implements OnInit {
         console.log('onInit Recipe');
         this.recipe = this.navParams.data;
     }
+    /*
     ionViewWillEnter(){
         console.log('ionViewWillEnter Recipe');
         this.recipe = this.navParams.data;
     }
+    */
 
 
 }

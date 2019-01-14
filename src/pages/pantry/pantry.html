@@ -14,7 +14,9 @@
           <img [src]="urlImg + item.categoria + '.jpg'" />
           <span class="regularFont colorPrimary">{{ item.amount }}</span>
           <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
-          <button ion-button item-end (click)="removeItem(i)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+          <button ion-button item-end (click)="updateItem(i, item, 'less')"><ion-icon name="remove"></ion-icon></button>
+          <button ion-button item-end (click)="updateItem(i, item, 'more')"><ion-icon name="add"></ion-icon></button>
+          <button ion-button item-end (click)="removeItem(i)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
       </ion-item>
   </ion-list>
 

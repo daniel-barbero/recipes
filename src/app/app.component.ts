@@ -58,7 +58,7 @@ export class MyApp {
         if(page.component == HomePage){
             this.nav.setRoot(HomePage);
         } else {
-            this.nav.push(page.component);
+            this.nav.push(page.component, {id: '0'});
         }
     }
 }

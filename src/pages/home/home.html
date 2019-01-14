@@ -17,6 +17,7 @@
 </ion-header>
 
 <ion-content>
+
   <ion-list padding-top [virtualScroll]="listRecipe" approxItemHeight="70px">
       <ion-item-sliding *virtualItem="let recipe" #slidingItem>
 
@@ -59,7 +60,7 @@
       </ion-item-sliding>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="infiniteEnabled">
       <ion-infinite-scroll-content loadingText="Cargando recetas ..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

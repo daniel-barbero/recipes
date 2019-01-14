@@ -20,6 +20,7 @@ export class HomePage {
     private page: number = -1;
     private listRecipe = [];
     public urlImg = "http://recetas.danielbarbero.es/img/";
+    public infiniteEnabled: boolean = true;
     reActiveInfinite: any;
 
     searchTerm: string = '';
@@ -39,7 +40,11 @@ export class HomePage {
         console.log(this.listRecipe);
         
         if (APPCONFIG.reloadList){
-            if ( this.page > -1) { this.reActiveInfinite.enable(true);}
+            console.log('reloadList');
+            if ( this.page > -1) { 
+              this.reActiveInfinite.enable(true);
+              console.log('page > -1');
+            }
             this.onLoadData();   
         }
     }
@@ -94,6 +99,7 @@ export class HomePage {
     
     doInfinite(infiniteScroll) {
       console.log('doInfinite FUNCTION');
+      
       this.reActiveInfinite = infiniteScroll;
       if (this.page == 9999){
           this.page = 0;
@@ -146,9 +152,11 @@ export class HomePage {
         console.log('onSearchInput FUNCTION');
         if ( searchTerm.length < 1 ){
             this.onLoadData();
+            this.infiniteEnabled = true;
         }
-        else if ( searchTerm.length > 3 ){
+        else if ( searchTerm.length > 5 ){
             this.onLoadData('all');
+            this.infiniteEnabled = false;
             setTimeout(() => {
               this.listRecipe = this.listRecipe.filter((recipe:Recipe) => {
                   return recipe.categoryFormat != undefined && recipe.categoryFormat.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1

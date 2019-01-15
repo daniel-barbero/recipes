@@ -28,8 +28,7 @@ import { PipesModule } from './../pipes/pipes.module';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { ImageResizer } from '@ionic-native/image-resizer';
-// import { File } from '@ionic-native/file'; is required by (cordova-plugin-file-transfer)
-import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -67,7 +66,7 @@ import { FilePath } from '@ionic-native/file-path';
     ArraysService,
     ShoppingListService,
     Camera,
-    FilePath,
+    File,
     FileTransfer,
     ImageResizer
   ]

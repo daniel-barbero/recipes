@@ -7,7 +7,7 @@ import { RecipesProvider } from '../../providers/recipes/recipes';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { ImageResizer } from '@ionic-native/image-resizer';
-import { FilePath } from '../../../node_modules/@ionic-native/file-path';
+import { File }  from '@ionic-native/file';
 
 import { Recipe } from '../../models/recipe.model';
 import { EditionPage } from '../edition/edition';
@@ -39,7 +39,7 @@ export class InputRecipe implements OnInit {
                 private modalCtrl: ModalController,
                 public actionSheetCtrl: ActionSheetController,
                 public alertCtrl: AlertController,
-                private filePath: FilePath,
+                private file: File,
                 private camera: Camera,
                 private transfer: FileTransfer,
                 private imageResizer: ImageResizer) {
@@ -101,27 +101,23 @@ export class InputRecipe implements OnInit {
           this.recipe.img = this.newName;
           this.editionImage = true;
           
-          this.filePath.resolveNativePath(imageData)
-          .then(path => {
-              // console.log(path);
-              this.imageResizer.resize({
-                  uri: path,
+          this.imageResizer.resize({
+                  uri: imageData,
+                  folderName: this.file.dataDirectory,
                   quality: 85,
                   width: 1280,
                   height: 1280
-              }).then(uri => {
-                  this.objectImgSelected = uri;
+          })
+          .then(result => {
+                  this.objectImgSelected = result;
                   //console.log(this.objectImgSelected);
                   this.dataurl = this.win.Ionic.WebView.convertFileSrc(this.objectImgSelected);
                   //console.log('normalizeURL: ' + this.dataurl);
-              })
-              .catch(err => console.log(err));
           })
           .catch(err => console.log(err));
+      })
+      .catch(err => this.onAlertError('Imagen no seleccionada', err));
 
-      }, (err) => {
-          this.onAlertError('Imagen no seleccionada', err);
-      });
   }
   
   createFileName() {

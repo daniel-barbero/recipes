@@ -19,11 +19,23 @@ export class ShoppingListService {
       this.ingredients[index] = ingredient;
     }
     
-    removeItem(index: number) {
-      this.ingredients.splice(index, 1);
+    removeItem(idOrIndex, type: string) {
+      if ( type == 'id'){
+          let index;
+          this.ingredients.some(function (elem, i) {
+              return elem.id === idOrIndex ? (index = i, true) : false;
+          }); 
+          this.ingredients.splice(index, 1);
+      }
+      else {
+         //type = index
+          this.ingredients.splice(idOrIndex, 1);
+      }
+      
     }
 
     clearItems() {
       this.ingredients = [];
     }
+
 }

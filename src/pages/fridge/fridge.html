@@ -7,19 +7,32 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <ion-toolbar color="secondary">
+        <ion-item class="categoryItem">
+            <ion-label>Mostrar</ion-label>
+            <ion-select placeholder="Mostrar solo ..." [(ngModel)]="filter" (ionChange)="setFilter()">
+                <ion-option value="all">Todo</ion-option>
+                <ion-option value="Tu">Raciones / Tupper</ion-option>
+                <ion-option value="Pr">Precocinados</ion-option>
+                <ion-option value="Ca">Carnes</ion-option>
+                <ion-option value="Ve">Vegetales</ion-option>
+                <ion-option value="Pe">Pescados</ion-option>
+                <ion-option value="Br">Pan</ion-option>
+            </ion-select>      
+        </ion-item>
+    </ion-toolbar>
 
-    <ion-list [virtualScroll]="listItems" approxItemHeight="50px">
+    <ion-list padding [virtualScroll]="listItemsView" approxItemHeight="50px">
         <ion-item *virtualItem="let item; let i = index">
             <img [src]="urlImg + item.categoria + '.jpg'" />
             <span class="regularFont colorPrimary">{{ item.amount }}</span>
             <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
             <button ion-button item-end (click)="updateItem(i, item, 'less')"><ion-icon name="remove"></ion-icon></button>
             <button ion-button item-end (click)="updateItem(i, item, 'more')"><ion-icon name="add"></ion-icon></button>
-            <button ion-button item-end (click)="removeItem(i)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
+            <button ion-button item-end (click)="removeItem(item.id)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
         </ion-item>
     </ion-list>
-  
 </ion-content>
   
 <ion-footer [ngClass]="{'displayNone': !showFooterState}">
@@ -32,7 +45,7 @@
                     </ion-item>
 
                     <ion-item class="quantityItem">
-                        <ion-input type="number" name="amount" placeholder="0" ngModel required text-center></ion-input>
+                        <ion-input type="number" name="amount" placeholder="0" [(ngModel)]="amount" required text-center></ion-input>
                     </ion-item>
 
                     <ion-item class="categoryItem">

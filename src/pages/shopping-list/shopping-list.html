@@ -13,7 +13,7 @@
               </ion-item>
 
               <ion-item ion-col col-2>
-                <ion-input type="number" name="amount" placeholder="0" ngModel required text-center></ion-input>
+                <ion-input type="number" name="amount" placeholder="1" [(ngModel)]="amount" required text-center></ion-input>
               </ion-item>
 
               <ion-col col-2 no-padding>
@@ -28,12 +28,14 @@
             <ion-item>
                 <span class="regularFont colorPrimary">{{ item.amount }}</span>
                 <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
-                <button ion-button item-end (click)="removeItem(i)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                <button ion-button item-end (click)="removeItem(i, 'index')"><ion-icon name="ios-trash-outline"></ion-icon></button>
             </ion-item>
 
             <ion-item-options side="right">
                 <button ion-button color="secondary" (click)="urgentItem(i, item, slidingItem)">
-                    <ion-icon name="md-alarm"></ion-icon> Urgente
+                    <ion-icon name="md-alarm"></ion-icon> 
+                    <span *ngIf="item.urgencia == 'SI'">No Urgente</span>
+                    <span *ngIf="item.urgencia == 'NO'">Urgente</span>
                 </button>
             </ion-item-options>
         </ion-item-sliding>

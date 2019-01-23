@@ -14,9 +14,15 @@ import { Ingredient } from "../../models/ingredient.model";
 export class FridgePage {
   public showFooterState: boolean = false;
   public urlImg = './assets/imgs/';
+
+  private filter: string = 'all';
+  private filterActive: boolean = false;
+  
   listModified: boolean = false;
+  amount: number = 1;
 
   listItems: Ingredient[];
+  listItemsView: Ingredient[];
 
   constructor(public navCtrl: NavController, 
               private recipesProvider: RecipesProvider,
@@ -27,7 +33,21 @@ export class FridgePage {
   
   ionViewWillEnter() {
       console.log("ionViewWillEnter");
-      this.onLoadData();
+      this.onLoadData('all');
+  }
+
+  setFilter(){
+      this.listItemsView = this.listItems;
+      
+      if ( this.filter != 'all'){
+          this.filterActive = true; 
+          this.listItemsView = this.listItemsView.filter((ingredient:Ingredient) => {
+              return ingredient.categoria.indexOf(this.filter) > -1;
+          });        
+      }
+      else {
+          this.filterActive = false;
+      }
   }
 
   ionViewCanLeave() {
@@ -57,15 +77,16 @@ export class FridgePage {
 
   addItem(form: NgForm) {
       this.slService.addItem(form.value.ingredientName, form.value.amount, 'NO', form.value.categoria);
-      form.reset();
+      form.reset({ amount: 1});
       this.listModified = true;
       this.loadItems();
   }
 
-  removeItem(index: number) {
-      this.slService.removeItem(index);
+  removeItem(id: number) {
+      this.slService.removeItem(id, 'id');
       this.listModified = true;
       this.loadItems();
+      if(this.filterActive){ this.setFilter();}
   }
 
   updateItem(index: number, item: Ingredient, action: string) {
@@ -90,6 +111,8 @@ export class FridgePage {
 
   loadItems() {
       this.listItems = this.slService.getItems();
+      this.listItemsView = this.listItems;
+      
       console.log(this.listItems);
   }
 
@@ -97,7 +120,7 @@ export class FridgePage {
       this.showFooterState = (this.showFooterState)? false : true;
   }
 
-  onLoadData() {
+  onLoadData(filter:string) {
       this.slService.clearItems();
       this.listItems = [];
       let loadingSpinner = this.loadingController.create({
@@ -105,7 +128,7 @@ export class FridgePage {
       });
 
       loadingSpinner.present();
-      this.recipesProvider.getList('freezer')
+      this.recipesProvider.getList('freezer', filter)
       .subscribe(
           result => {
               if (typeof result === 'string'){

@@ -44,8 +44,8 @@ export class RecipesProvider {
 
     ////////////////       SHOPPING LIST - FRIDGE - PANTRY            //////////////////////
     
-    getList(table): Observable<any> {
-        return this.http.get(APPCONFIG.API+'shopping/'+table).map(response => response.json())
+    getList(table:string, filter:string): Observable<any> {
+        return this.http.get(APPCONFIG.API+'shopping/'+table+'/'+filter).map(response => response.json())
         .catch((error:any) => Observable.throw(error || 'server error'));
     }
     

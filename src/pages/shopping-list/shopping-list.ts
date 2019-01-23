@@ -13,6 +13,7 @@ import { Ingredient } from "../../models/ingredient.model";
 })
 export class ShoppingListPage {
   listItems: Ingredient[];
+  amount: number = 1;
 
   constructor(public navCtrl: NavController, 
               private recipesProvider: RecipesProvider,
@@ -28,12 +29,12 @@ export class ShoppingListPage {
 
   addItem(form: NgForm) {
     this.slService.addItem(form.value.ingredientName, form.value.amount);
-    form.reset();
+    form.reset({ amount: 1});
     this.loadItems();
   }
 
   removeItem(index: number) {
-    this.slService.removeItem(index);
+    this.slService.removeItem(index, 'index');
     this.loadItems();
   }
 
@@ -75,7 +76,7 @@ export class ShoppingListPage {
       });
 
       loadingSpinner.present();
-      this.recipesProvider.getList('shopping')
+      this.recipesProvider.getList('shopping', 'all')
       .subscribe(
           result => {
               if (typeof result === 'string'){

@@ -3,6 +3,18 @@ page-pantry {
         background: url('../../assets/imgs/bg-pantry.png') no-repeat;
         background-size: 100%;
         background-position: bottom;
+
+        .toolbar-md {
+            min-height: inherit;
+            .item-md {
+                .item-inner {
+                  border-bottom: none;  
+                }
+                &.item-select .label-md {
+                    color: #fff;
+                }
+            }
+        }    
     }
 
     ion-title .button-md {
@@ -15,7 +27,7 @@ page-pantry {
     .select-placeholder {
         color:#ccc !important;
     }
-  
+
     .grid {
 
         [col-10] {

@@ -36,6 +36,10 @@ page-shopping-list {
   }
 
   ion-list {
+      ion-item-sliding.active-slide .item {
+          background: #fff;
+      }
+      
       .item-md {
           .bold {
             font-weight: 700;

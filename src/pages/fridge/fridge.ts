@@ -3,9 +3,10 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import { NgForm } from "@angular/forms";
 
 import { RecipesProvider } from '../../providers/recipes/recipes';
-import { ShoppingListService } from '../../providers/ingredients/shoppingListService';
+import { ListIngredientService } from '../../providers/ingredients/listIngredientService';
 
 import { Ingredient } from "../../models/ingredient.model";
+import { ListItems } from "../../models/list.items.model";
 
 @Component({
   selector: 'page-fridge',
@@ -21,19 +22,38 @@ export class FridgePage {
   listModified: boolean = false;
   amount: number = 1;
 
-  listItems: Ingredient[];
-  listItemsView: Ingredient[];
+  listItems: ListItems[];
+  listItemsView: ListItems[];
+
+  ingredients: Ingredient[];
+  ingredientsView: Ingredient[];
+  arrayIngredients = [];
+
+  public categories;
 
   constructor(public navCtrl: NavController, 
               private recipesProvider: RecipesProvider,
-              private slService: ShoppingListService,
+              private slService: ListIngredientService,
               private loadingController: LoadingController,
               private alertCtrl : AlertController) {
   }
   
   ionViewWillEnter() {
       console.log("ionViewWillEnter");
-      this.onLoadData('all');
+      this.recipesProvider.getList('categories', 'all', 'id').subscribe(
+          result => {
+              if (typeof result === 'string'){
+                  this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+              }
+              else {
+                  this.categories = result;
+                  this.onLoadData('all');
+              }
+          },
+          error => {
+              this.onAlertError(error);
+          }
+      );
   }
 
   setFilter(){
@@ -41,8 +61,8 @@ export class FridgePage {
       
       if ( this.filter != 'all'){
           this.filterActive = true; 
-          this.listItemsView = this.listItemsView.filter((ingredient:Ingredient) => {
-              return ingredient.categoria.indexOf(this.filter) > -1;
+          this.listItemsView = this.listItemsView.filter((listItems:ListItems) => {
+              return listItems.categoria.indexOf(this.filter) > -1;
           });        
       }
       else {
@@ -50,11 +70,18 @@ export class FridgePage {
       }
   }
 
+  categorySelected(idCategory: string){
+      this.ingredientsView = this.ingredients;
+      this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
+          return ingredient.categoria.indexOf(idCategory) > -1;
+      });
+  }
+
   ionViewCanLeave() {
       console.log('ionViewCanLeave');
       if (this.listModified) {
           console.log(this.listModified);
-          this.recipesProvider.updateShopping(this.listItems, 'freezer').subscribe(
+          this.recipesProvider.updateList(this.listItems, 'freezer').subscribe(
               result => {
                   if (result.includes('error')){
                       this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
@@ -76,34 +103,41 @@ export class FridgePage {
   }
 
   addItem(form: NgForm) {
-      this.slService.addItem(form.value.ingredientName, form.value.amount, 'NO', form.value.categoria);
+      var addItemAction = this.slService.addItem(this.arrayIngredients[form.value.ingredient].name, form.value.amount, 'NO', form.value.categoria, form.value.ingredient);
+      if (addItemAction){
+          this.listModified = true;
+          this.loadItems();
+          if(this.filterActive){ this.setFilter();}
+      }
+      else {
+        this.showFooter();
+        this.onAlertError("El elemento ya existe en la lista. Añada manualmente más elementos.")
+      }
       form.reset({ amount: 1});
-      this.listModified = true;
-      this.loadItems();
   }
 
   removeItem(id: number) {
-      this.slService.removeItem(id, 'id');
+      this.slService.removeItem(id_ingredient, 'id');
       this.listModified = true;
       this.loadItems();
       if(this.filterActive){ this.setFilter();}
   }
 
-  updateItem(index: number, item: Ingredient, action: string) {
+  updateItem(index: number, item: ListItems, action: string) {
       console.log(item.amount);
       let calculate: number;
       if ( action == 'more'){
-        calculate = parseInt(item.amount, 10) +1;
+        calculate = item.amount +1;
       }
       else {
-        calculate = parseInt(item.amount, 10) -1;
+        calculate = item.amount -1;
         if ( calculate == 0) {
           this.removeItem(index);
           return false;
         }
       }
       
-      item.amount = calculate.toString();
+      item.amount = calculate;
       console.log(item.amount);
       this.slService.updateItem(index, item);
       this.listModified = true;
@@ -128,7 +162,7 @@ export class FridgePage {
       });
 
       loadingSpinner.present();
-      this.recipesProvider.getList('freezer', filter)
+      this.recipesProvider.getList('freezer', filter, 'id')
       .subscribe(
           result => {
               if (typeof result === 'string'){
@@ -138,8 +172,29 @@ export class FridgePage {
               else {
                   this.slService.addItems(result);
                   
-                  loadingSpinner.dismiss();
-                  this.loadItems();
+                  // ingredients
+                  this.recipesProvider.getList('ingredients', 'all', 'name').subscribe(
+                    result => {
+                        if (typeof result === 'string'){
+                            this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                        }
+                        else {
+                            this.ingredients = result;
+                            for (var i = 0; i < this.ingredients.length; i++) {
+                                var key = this.ingredients[i].id;
+                                this.arrayIngredients[key] = {
+                                    name: this.ingredients[i].name
+                                };
+                            }
+                            
+                            loadingSpinner.dismiss();
+                            this.loadItems();
+                        }
+                    },
+                    error => {
+                        this.onAlertError(error);
+                    }
+                  );
               }
           },
           error => {

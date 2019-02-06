@@ -13,13 +13,9 @@
           <ion-label>Mostrar</ion-label>
           <ion-select placeholder="Mostrar solo ..." [(ngModel)]="filter" (ionChange)="setFilter()">
               <ion-option value="all">Todo</ion-option>
-              <ion-option value="Le">Legumbres</ion-option>
-              <ion-option value="Co">Conservas</ion-option>
-              <ion-option value="Pa">Pasta</ion-option>
-              <ion-option value="Sa">Salsas</ion-option>
-              <ion-option value="Ap">Aperitivos</ion-option>
-              <ion-option value="Du">Dulces</ion-option>
-              <ion-option value="Be">Bebidas</ion-option>
+              <ng-container *ngFor="let categoria of categories">
+               <ion-option *ngIf="categoria.id < 10" value="{{ categoria.type }}">{{ categoria.name }}</ion-option> 
+              </ng-container>
           </ion-select>      
       </ion-item>
   </ion-toolbar>
@@ -28,10 +24,11 @@
       <ion-item *virtualItem="let item; let i = index">
           <img [src]="urlImg + item.categoria + '.jpg'" />
           <span class="regularFont colorPrimary">{{ item.amount }}</span>
-          <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
+          <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ arrayIngredients[item.id_ingredient].name }}</span>
+
           <button ion-button item-end (click)="updateItem(i, item, 'less')"><ion-icon name="remove"></ion-icon></button>
           <button ion-button item-end (click)="updateItem(i, item, 'more')"><ion-icon name="add"></ion-icon></button>
-          <button ion-button item-end (click)="removeItem(item.id)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
+          <button ion-button item-end (click)="removeItem(item.id_ingredient)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
       </ion-item>
   </ion-list>
 
@@ -42,25 +39,31 @@
       <ion-grid>
           <ion-row>
               <ion-col col-10>
-                  <ion-item>
-                      <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
-                  </ion-item>
-
-                  <ion-item class="quantityItem">
-                      <ion-input type="number" name="amount" placeholder="0" [(ngModel)]="amount" required text-center></ion-input>
+                  <ion-item class="categoryItem">
+                      <ion-label>Categoría</ion-label>
+                      <ion-select name="categoria" placeholder="Categoría" ngModel (ionChange)="categorySelected($event)" required text-center>
+                        <ng-container *ngFor="let categoria of categories">
+                          <ion-option *ngIf="categoria.id < 10" value="{{ categoria.type }}">{{ categoria.name }}</ion-option> 
+                         </ng-container>
+                      </ion-select>      
                   </ion-item>
 
                   <ion-item class="categoryItem">
-                      <ion-label>Categoría</ion-label>
-                      <ion-select name="categoria" placeholder="Categoría" ngModel required text-center>
-                          <ion-option value="Le">Legumbres</ion-option>
-                          <ion-option value="Co">Conservas</ion-option>
-                          <ion-option value="Pa">Pasta</ion-option>
-                          <ion-option value="Sa">Salsas</ion-option>
-                          <ion-option value="Ap">Aperitivos</ion-option>
-                          <ion-option value="Du">Dulces</ion-option>
-                          <ion-option value="Be">Bebidas</ion-option>
+                      <ion-label>Ingrediente</ion-label>
+                      <ion-select name="ingredient" placeholder="Ingrediente" ngModel required text-center>
+                           <ng-container *ngFor="let ingredient of ingredientsView">
+                              <ion-option value="{{ ingredient.id }}">{{ ingredient.name }}</ion-option>
+                           </ng-container>
                       </ion-select>      
+                  </ion-item>
+                  
+                  <!--
+                  <ion-item>
+                      <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
+                  </ion-item>-->
+
+                  <ion-item class="quantityItem">
+                      <ion-input type="number" name="amount" placeholder="0" [(ngModel)]="amount" required text-center></ion-input>
                   </ion-item>
               </ion-col>
 
@@ -70,5 +73,5 @@
 
           </ion-row>      
       </ion-grid>
-    </form>
+  </form>
 </ion-footer>

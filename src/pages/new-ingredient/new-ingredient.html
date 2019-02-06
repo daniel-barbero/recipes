@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Nuevo Ingrediente</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form #f="ngForm" (ngSubmit)="saveData(f)">
+      <ion-grid>
+          <ion-row>
+              <ion-col>
+                  <ion-item class="categoryItem">
+                      <ion-label>Categorías</ion-label>
+                      <ion-select name="categoria" placeholder="Categoría" (ionChange)="categorySelected($event)" ngModel required text-center>
+                        <ng-container *ngFor="let categoria of categories">
+                          <ion-option value="{{ categoria.type }}" *ngIf="categoria.id < 10">{{ categoria.name }} (Despensa)</ion-option>
+                          <ion-option value="{{ categoria.type }}" *ngIf="categoria.id > 10">{{ categoria.name }} (Congelador)</ion-option> 
+                        </ng-container>
+                      </ion-select>      
+                  </ion-item>
+                  
+                  <ion-item>
+                      <ion-input type="text" name="name" placeholder="Ingrediente" ngModel required></ion-input>
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col>
+                  <button ion-button color="primary" type="submit" block [disabled]="!f.valid">Añadir Ingrediente</button>
+              </ion-col>                
+          </ion-row>  
+
+          <ion-row>
+              <ion-col *ngIf="ingredientsView != null">
+                  <h5>Elementos ya añadidos en {{ categoriaSelected }}</h5>
+                  <ion-list>
+                      <ion-badge *ngFor="let ingredient of ingredientsView" color="secondary">{{  ingredient.name }}</ion-badge>
+                  </ion-list>                
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+    </form>
+</ion-content>

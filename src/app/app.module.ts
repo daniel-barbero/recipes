@@ -13,16 +13,17 @@ import { RecipePage } from '../pages/recipe/recipe';
 import { PantryPage } from '../pages/pantry/pantry';
 import { InputRecipe } from '../pages/inputRecipe/inputRecipe';
 import { EditionPage } from '../pages/edition/edition';
-import { ShoppingListPage } from './../pages/shopping-list/shopping-list';
-import { FridgePage } from './../pages/fridge/fridge';
+import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
+import { FridgePage } from '../pages/fridge/fridge';
+import { NewIngredientPage } from '../pages/new-ingredient/new-ingredient';
 
 // PROVIDERS
 import { RecipesProvider } from '../providers/recipes/recipes';
 import { ArraysService } from '../providers/arrays/arrays';
-import { ShoppingListService } from '../providers/ingredients/shoppingListService';
+import { ListIngredientService } from '../providers/ingredients/listIngredientService';
 
 // PIPES
-import { PipesModule } from './../pipes/pipes.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 // PLUGINS
 import { Camera } from '@ionic-native/camera';
@@ -39,7 +40,8 @@ import { File } from '@ionic-native/file';
     InputRecipe,
     EditionPage,
     ShoppingListPage,
-    FridgePage
+    FridgePage,
+    NewIngredientPage
   ],
   imports: [
     HttpModule,
@@ -56,7 +58,8 @@ import { File } from '@ionic-native/file';
     InputRecipe,
     EditionPage,
     ShoppingListPage,
-    FridgePage
+    FridgePage,
+    NewIngredientPage
   ],
   providers: [
     StatusBar,
@@ -64,7 +67,7 @@ import { File } from '@ionic-native/file';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RecipesProvider,
     ArraysService,
-    ShoppingListService,
+    ListIngredientService,
     Camera,
     File,
     FileTransfer,

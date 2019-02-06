@@ -1,4 +1,4 @@
-import { APPCONFIG } from './../../app/config';
+import { APPCONFIG } from '../../app/config';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, ItemSliding } from 'ionic-angular';
 import { FormControl } from '@angular/forms';
@@ -157,6 +157,7 @@ export class HomePage {
         else if ( searchTerm.length >= 5 ){
             this.onLoadData('all');
             this.infiniteEnabled = false;
+            
             setTimeout(() => {
               this.listRecipe = this.listRecipe.filter((recipe:Recipe) => {
                   return recipe.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 

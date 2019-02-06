@@ -8,8 +8,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { PantryPage } from '../pages/pantry/pantry';
 import { InputRecipe } from '../pages/inputRecipe/inputRecipe';
-import { ShoppingListPage } from './../pages/shopping-list/shopping-list';
-import { FridgePage } from './../pages/fridge/fridge';
+import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
+import { FridgePage } from '../pages/fridge/fridge';
+import { NewIngredientPage } from '../pages/new-ingredient/new-ingredient';
 
 @Component({
     templateUrl: 'app.html'
@@ -38,6 +39,7 @@ export class MyApp {
           { title: 'Despensa', component: PantryPage, icon: 'md-cube'},
           { title: 'Congelador', component: FridgePage, icon: 'snow'},
           { title: 'Lista de compra', component: ShoppingListPage, icon: 'cart'},
+          { title: 'Nuevo Ingrediente', component: NewIngredientPage, icon: 'add-circle'},
       ];
     }
 

@@ -5,11 +5,19 @@
 </ion-header>
 
 <ion-content padding>
+
+    <ion-searchbar [(ngModel)]="searchTerm" 
+        [formControl]="searchControl" 
+        (ionInput)="onSearchInput(searchTerm)">
+    </ion-searchbar>
+
     <form #f="ngForm" (ngSubmit)="addItem(f)" padding-horizontal>
       <ion-grid>
           <ion-row>
               <ion-item ion-col col-8>
-                <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
+                <ion-input type="text" name="name" placeholder="Ingrediente" [(ngModel)]="name" required readonly></ion-input>
+                <input type="hidden" name="category" [(ngModel)]="category" />
+                <input type="hidden" name="idIngredient" [(ngModel)]="idIngredient" />
               </ion-item>
 
               <ion-item ion-col col-2>
@@ -19,7 +27,16 @@
               <ion-col col-2 no-padding>
                 <button ion-button type="submit" block [disabled]="!f.valid" float-right>+</button>
               </ion-col>
-          </ion-row>      
+          </ion-row>
+          <ion-row>
+            <ion-col col-8>
+              <ion-list>
+                    <li *ngFor="let ingredient of ingredientsView;">
+                      <button (click)="selectIngredient(ingredient.id, ingredient.name, ingredient.categoria)">{{ ingredient.name }}</button>
+                    </li>
+              </ion-list>
+            </ion-col>
+          </ion-row>   
       </ion-grid>
     </form>
 

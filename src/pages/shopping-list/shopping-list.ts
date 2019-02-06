@@ -1,44 +1,61 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController, ItemSliding } from 'ionic-angular';
-import { NgForm } from "@angular/forms";
+import { NgForm, FormControl } from "@angular/forms";
 
 import { RecipesProvider } from '../../providers/recipes/recipes';
-import { ShoppingListService } from '../../providers/ingredients/shoppingListService';
+import { ListIngredientService } from '../../providers/ingredients/listIngredientService';
 
-import { Ingredient } from "../../models/ingredient.model";
+import { ListItems } from "../../models/list.items.model";
+import { Ingredient } from '../../models/ingredient.model';
+
 
 @Component({
   selector: 'page-shopping-list',
   templateUrl: 'shopping-list.html'
 })
 export class ShoppingListPage {
-  listItems: Ingredient[];
+  name: string = '';
   amount: number = 1;
+  idIngredient: number;
+  category: string = '';
+
+  ingredients: Ingredient[];
+  ingredientsView: Ingredient[];
+  listItems: ListItems[];
+
+  searchTerm: string = '';
+  searchControl: FormControl;
 
   constructor(public navCtrl: NavController, 
               private recipesProvider: RecipesProvider,
-              private slService: ShoppingListService,
+              private slService: ListIngredientService,
               private loadingController: LoadingController,
               private alertCtrl : AlertController) {
+
+        this.searchControl = new FormControl();
   }
   
   ionViewWillEnter() {
-    console.log("ionViewWillEnter");
-    this.onLoadData();
+      console.log("ionViewWillEnter");
+      this.onLoadData();
   }
 
+  // 
+  //       MANAGE ARRAY INGREDIENTS LIST - ListIngredientService
+  //
+
   addItem(form: NgForm) {
-    this.slService.addItem(form.value.ingredientName, form.value.amount);
-    form.reset({ amount: 1});
-    this.loadItems();
+      this.slService.addItem(form.value.name, form.value.amount, 'NO', form.value.category, form.value.idIngredient);
+      form.reset({ amount: 1});
+      this.loadItems();
   }
 
   removeItem(index: number) {
-    this.slService.removeItem(index, 'index');
-    this.loadItems();
+      this.slService.removeItem(index, 'index');
+      this.loadItems();
   }
 
-  urgentItem(index: number, ingredient: Ingredient, slidingItem: ItemSliding) {
+  urgentItem(index: number, ingredient: ListItems, slidingItem: ItemSliding) {
       slidingItem.close();
       console.log(ingredient.urgencia);
       ingredient.urgencia = (ingredient.urgencia == 'SI')? 'NO' : 'SI';
@@ -50,10 +67,38 @@ export class ShoppingListPage {
       console.log(this.listItems);
   }
 
-  saveData(ingredients: Array<Ingredient>) {
-      console.log(ingredients);
+  // 
+  //       SELECT INGREDIENT
+  //
 
-      this.recipesProvider.updateShopping(ingredients, 'shopping').subscribe(
+  onSearchInput(searchTerm){
+      if ( searchTerm.length < 3 ){
+          this.ingredientsView = this.ingredients;
+      } 
+      else {
+          setTimeout(() => {
+              this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
+                  return ingredient.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+              });
+          }, 500);
+      }
+  }
+
+  selectIngredient(id:number, name:string, cat:string){
+      event.preventDefault();
+      this.name = name;
+      this.idIngredient = id;
+      this.category = cat;
+  }
+
+  // 
+  //       SAVE FORM
+  //
+
+  saveData(ingredientsList: Array<ListItems>) {
+      console.log(ingredientsList);
+
+      this.recipesProvider.updateShopping(ingredientsList, 'shopping').subscribe(
           result => {
               if (result.includes('error')){
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
@@ -76,19 +121,31 @@ export class ShoppingListPage {
       });
 
       loadingSpinner.present();
-      this.recipesProvider.getList('shopping', 'all')
-      .subscribe(
+      this.recipesProvider.getList('shopping', 'all', 'id').subscribe(
           result => {
               if (typeof result === 'string'){
                   loadingSpinner.dismiss();
-                  //console.log(result);
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
                   this.slService.addItems(result);
-                  
-                  loadingSpinner.dismiss();
-                  this.loadItems();
+                  this.recipesProvider.getList('ingredients', 'all', 'name').subscribe(
+                    result => {
+                        if (typeof result === 'string'){
+                            this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                        }
+                        else {
+                            this.ingredients = result;
+                            
+                            loadingSpinner.dismiss();
+                            this.loadItems();
+                        }
+                    },
+                    error => {
+                        this.onAlertError(error);
+                    }
+                );
+
               }
           },
           error => {
@@ -97,6 +154,10 @@ export class ShoppingListPage {
           }
       );
   }
+
+  // 
+  //       ALERTS
+  //
 
   onAlertError(error) {
       const alert = this.alertCtrl.create({

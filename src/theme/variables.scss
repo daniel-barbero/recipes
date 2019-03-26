@@ -47,6 +47,10 @@ $text-input-md-highlight-color-invalid: color($colors, danger);
 $select-md-icon-color:       color($colors, secondary);
 
 $alert-md-content-max-height: inherit;
+$alert-md-radio-label-padding-top: 7px;
+$alert-md-radio-label-padding-bottom: 7px;
+
+$action-sheet-md-padding-top: 0;
 
 // Custom Theme
 // --------------------------------------------------

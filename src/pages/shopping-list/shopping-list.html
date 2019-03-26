@@ -29,7 +29,7 @@
               </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="ingredientsView?.length">
             <ion-col>
               <ion-list>
                     <li *ngFor="let ingredient of ingredientsView;">

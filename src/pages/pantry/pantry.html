@@ -41,7 +41,9 @@
               <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Categoría</ion-label>
-                      <ion-select name="categoria" placeholder="Categoría" ngModel (ionChange)="categorySelected($event)" required text-center>
+                      <ion-select name="categoria" placeholder="Categoría" ngModel (ionChange)="categorySelected($event)" required text-center
+                      interface="action-sheet"
+                      [selectOptions]="selectCategories">
                         <ng-container *ngFor="let categoria of categories">
                           <ion-option *ngIf="categoria.id < 10" value="{{ categoria.type }}">{{ categoria.name }}</ion-option> 
                          </ng-container>
@@ -52,11 +54,12 @@
               <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Ingrediente</ion-label>
-                      <ion-select name="ingredient" placeholder="Ingrediente" ngModel required text-center>
+                      <ion-select name="ingredient" placeholder="Ingrediente" ngModel required text-center
+                      [selectOptions]="selectIngredient">
                            <ng-container *ngFor="let ingredient of ingredientsView">
                               <ion-option value="{{ ingredient.id }}">{{ ingredient.name }}</ion-option>
                            </ng-container>
-                      </ion-select>      
+                      </ion-select>
                   </ion-item>                
               </ion-col>
 

@@ -13,6 +13,13 @@ import { ListItems } from "../../models/list.items.model";
   templateUrl: 'fridge.html',
 })
 export class FridgePage {
+  selectCategories = {
+    cssClass: 'option-categories'
+  };
+  selectIngredient = {
+    cssClass: 'option-ingredient'
+  };
+
   public showFooterState: boolean = false;
   public urlImg = './assets/imgs/';
 
@@ -36,6 +43,8 @@ export class FridgePage {
               private slService: ListIngredientService,
               private loadingController: LoadingController,
               private alertCtrl : AlertController) {
+      
+       
   }
   
   ionViewWillEnter() {

@@ -79,10 +79,11 @@ export class ShoppingListPage {
   //
 
   onSearchInput(searchTerm){
-      if (searchTerm.length == 0){
+
+      if (searchTerm.length == 0 || searchTerm == ''){
           this.ingredientsView = [];
       }
-      else if ( searchTerm.length < 3 ){
+      else if ( searchTerm.length < 2 ){
           this.ingredientsView = this.ingredients;
       } 
       else {

@@ -269,10 +269,29 @@ ion-footer form .grid {
     max-height: 65vh;
 }
 
+.alert-md .alert-tappable {
+    min-height: inherit;
+}
+
+.option-ingredient.alert-md .alert-head {
+    padding-top: 13px;
+    padding-bottom: 10px;
+}
+
 // ***************************************************************************//
 //         ACTION SHEET  
 // ***************************************************************************//
-
+.option-categories.action-sheet-md .action-sheet-title {
+    color: $color-theme1;
+}
+.option-categories.action-sheet-md .action-sheet-button:not(.action-sheet-cancel) {
+    width: 48%;
+    margin: 1%;
+    background: $color-theme2;
+    color: #fff;
+    vertical-align: top;
+    border-radius: 4px;
+}
 .action-sheet-cancel.action-sheet-button .button-inner {
   display: block;
   width: 12rem;

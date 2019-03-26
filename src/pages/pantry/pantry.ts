@@ -13,6 +13,13 @@ import { ListItems } from "../../models/list.items.model";
   templateUrl: 'pantry.html',
 })
 export class PantryPage {
+  selectCategories = {
+    cssClass: 'option-categories'
+  };
+  selectIngredient = {
+    cssClass: 'option-ingredient'
+  };
+
   public showFooterState: boolean = false;
   public urlImg = './assets/imgs/';
 

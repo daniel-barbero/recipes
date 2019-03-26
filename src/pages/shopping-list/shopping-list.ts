@@ -26,9 +26,13 @@ export class ShoppingListPage {
   searchTerm: string = '';
   searchControl: FormControl;
 
+  public objectPantry: ListItems[];
+  public objectFreezer: ListItems[];
+  exists: boolean;
+
   constructor(public navCtrl: NavController, 
               private recipesProvider: RecipesProvider,
-              private slService: ListIngredientService,
+              private listIngredientService: ListIngredientService,
               private loadingController: LoadingController,
               private alertCtrl : AlertController) {
 
@@ -45,13 +49,15 @@ export class ShoppingListPage {
   //
 
   addItem(form: NgForm) {
-      this.slService.addItem(form.value.name, form.value.amount, 'NO', form.value.category, form.value.idIngredient);
+      this.listIngredientService.addItem(form.value.name, form.value.amount, 'NO', form.value.category, form.value.idIngredient);
       form.reset({ amount: 1});
+      this.searchTerm = '';
+      this.ingredientsView = [];
       this.loadItems();
   }
 
   removeItem(index: number) {
-      this.slService.removeItem(index, 'index');
+      this.listIngredientService.removeItem(index, 'index');
       this.loadItems();
   }
 
@@ -59,20 +65,24 @@ export class ShoppingListPage {
       slidingItem.close();
       console.log(ingredient.urgencia);
       ingredient.urgencia = (ingredient.urgencia == 'SI')? 'NO' : 'SI';
-      this.slService.updateItem(index, ingredient);
+      this.listIngredientService.updateItem(index, ingredient);
   }
 
   loadItems() {
-      this.listItems = this.slService.getItems();
+      this.listItems = this.listIngredientService.getItems();
       console.log(this.listItems);
   }
+
 
   // 
   //       SELECT INGREDIENT
   //
 
   onSearchInput(searchTerm){
-      if ( searchTerm.length < 3 ){
+      if (searchTerm.length == 0){
+          this.ingredientsView = [];
+      }
+      else if ( searchTerm.length < 3 ){
           this.ingredientsView = this.ingredients;
       } 
       else {
@@ -80,16 +90,20 @@ export class ShoppingListPage {
               this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
                   return ingredient.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
               });
-          }, 500);
+          }, 100);
       }
   }
 
-  selectIngredient(id:number, name:string, cat:string){
+  selectIngredient(id: number, name: string, cat: string){
       event.preventDefault();
       this.name = name;
       this.idIngredient = id;
       this.category = cat;
+
+      this.ingredientsView = [];
+      this.searchTerm = '';
   }
+
 
   // 
   //       SAVE FORM
@@ -113,14 +127,134 @@ export class ShoppingListPage {
       );
   }
 
+  // 
+  //       SAVE FORM ON PANTRY
+  //
+
+  moveData(ingredientsList: Array<ListItems>) {
+     // GET FREEZER
+     this.recipesProvider.getList('pantry', 'all', 'id_ingredient').subscribe(
+      result => {
+            if (typeof result === 'string'){
+                this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+            }
+            else {
+                this.objectPantry = result;
+
+                this.recipesProvider.getList('freezer', 'all', 'id_ingredient').subscribe(
+                  result => {
+                        if (typeof result === 'string'){
+                            this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                        }
+                        else {
+                            this.objectFreezer = result;
+
+                            // ITERATE
+                            Object.keys(ingredientsList).forEach(
+                              (k, i) => { 
+                                  if ( ingredientsList[k].categoria == 'Le' ||
+                                  ingredientsList[k].categoria == 'Co' ||
+                                  ingredientsList[k].categoria == 'Pa' ||
+                                  ingredientsList[k].categoria == 'Sa' ||
+                                  ingredientsList[k].categoria == 'Ap' ||
+                                  ingredientsList[k].categoria == 'Du' ||
+                                  ingredientsList[k].categoria == 'Be' )
+                                  {
+                                    //PANTRY
+                                    this.exists = false;
+                                    console.log('---- PANTRY -----');
+                                    console.log(ingredientsList[k].name + ' - ' + ingredientsList[k].categoria);  
+
+                                    this.objectPantry.filter((item) => {
+                                      if (ingredientsList[k].id_ingredient === item.id_ingredient) {
+                                          item.amount = Number(item.amount) + Number(ingredientsList[k].amount);
+                                          this.exists = true;
+                                      }
+                                      return item;
+                                    });
+
+                                    if (!this.exists){
+                                        console.log('no encontrado');
+                                        this.objectPantry.push(new ListItems(ingredientsList[k].name, ingredientsList[k].amount, ingredientsList[k].urgencia, ingredientsList[k].categoria, ingredientsList[k].id_ingredient));
+                                    }
+                                    
+                                  }
+                                  else if ( ingredientsList[k].categoria == 'Tu' ||
+                                  ingredientsList[k].categoria == 'Pr' ||
+                                  ingredientsList[k].categoria == 'Ca' ||
+                                  ingredientsList[k].categoria == 'Ve' ||
+                                  ingredientsList[k].categoria == 'Pe' ||
+                                  ingredientsList[k].categoria == 'Br' )
+                                  { 
+                                    // FREEZER
+                                    this.exists = false;
+                                    console.log('---- FREEZER -----')
+                                    console.log(ingredientsList[k].name + ' - ' + ingredientsList[k].categoria); 
+                                    this.objectFreezer.filter((item) => {
+                                      if (ingredientsList[k].id_ingredient === item.id_ingredient) {
+                                          item.amount = Number(item.amount) + Number(ingredientsList[k].amount);
+                                          this.exists = true;
+                                      }
+                                      return item;
+                                    });
+
+                                    if (!this.exists){
+                                        console.log('no encontrado');
+                                        this.objectFreezer.push(new ListItems(ingredientsList[k].name, ingredientsList[k].amount, ingredientsList[k].urgencia, ingredientsList[k].categoria, ingredientsList[k].id_ingredient));
+                                    }
+                                  }
+                                  else {
+                                    // sin categoria
+                                  }
+                                  
+                            });
+                            console.log('OUT OF ITERATION');
+                            this.moveDataPantry(this.objectPantry, 'pantry');
+                            this.moveDataPantry(this.objectFreezer, 'freezer');
+                        }
+                    },
+                    error => {this.onAlertError(error);}
+                );
+            }
+        },
+        error => {this.onAlertError(error);}
+    );  
+
+  }
+
+  moveDataPantry(objectPantry, table){
+      this.recipesProvider.updateList(objectPantry, table).subscribe(
+          result => {
+              if (result.includes('error')){
+                  this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+              }
+              else {
+                  if ( table == 'freezer'){
+                      this.listItems = [];
+                      this.saveData(this.listItems);
+                  }
+                  //this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+              }    
+          },
+          error => {
+              console.log(error);
+              return false;
+          }
+      );
+  }
+
+
+
   onLoadData() {
-      this.slService.clearItems();
+      this.listIngredientService.clearItems();
       this.listItems = [];
       let loadingSpinner = this.loadingController.create({
         content: "Cargando"
       });
 
       loadingSpinner.present();
+
+      // get List shopping
       this.recipesProvider.getList('shopping', 'all', 'id').subscribe(
           result => {
               if (typeof result === 'string'){
@@ -128,7 +262,9 @@ export class ShoppingListPage {
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
-                  this.slService.addItems(result);
+                  this.listIngredientService.addItems(result);
+
+                  // get array ingredients
                   this.recipesProvider.getList('ingredients', 'all', 'name').subscribe(
                     result => {
                         if (typeof result === 'string'){
@@ -136,7 +272,7 @@ export class ShoppingListPage {
                         }
                         else {
                             this.ingredients = result;
-                            
+
                             loadingSpinner.dismiss();
                             this.loadItems();
                         }
@@ -155,6 +291,7 @@ export class ShoppingListPage {
       );
   }
 
+  
   // 
   //       ALERTS
   //

@@ -154,7 +154,7 @@ export class HomePage {
             this.onLoadData();
             this.infiniteEnabled = true;
         }
-        else if ( searchTerm.length >= 5 ){
+        else if ( searchTerm.length >= 4 ){
             this.onLoadData('all');
             this.infiniteEnabled = false;
             

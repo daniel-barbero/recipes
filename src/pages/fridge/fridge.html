@@ -24,28 +24,30 @@
         <ion-item *virtualItem="let item; let i = index">
             <img [src]="urlImg + item.categoria + '.jpg'" />
             <span class="regularFont colorPrimary">{{ item.amount }}</span>
-            <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
+            <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ arrayIngredients[item.id_ingredient].name }}</span>
             <button ion-button item-end (click)="updateItem(i, item, 'less')"><ion-icon name="remove"></ion-icon></button>
             <button ion-button item-end (click)="updateItem(i, item, 'more')"><ion-icon name="add"></ion-icon></button>
             <button ion-button item-end (click)="removeItem(item.id_ingredient)" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
         </ion-item>
-    </ion-list>
+    </ion-list> 
 </ion-content>
   
 <ion-footer [ngClass]="{'displayNone': !showFooterState}">
-    <form #f="ngForm" (ngSubmit)="addItem(f)" padding-horizontal>
-        <ion-grid>
+    <form #f="ngForm" (ngSubmit)="addItem(f)">
+        <ion-grid no-padding>
           <ion-row>
-              <ion-col col-10>
+              <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Categoría</ion-label>
                       <ion-select name="categoria" placeholder="Categoría" ngModel (ionChange)="categorySelected($event)" required text-center>
                         <ng-container *ngFor="let categoria of categories">
                           <ion-option *ngIf="categoria.id >= 10" value="{{ categoria.type }}">{{ categoria.name }}</ion-option> 
                         </ng-container>
-                      </ion-select>      
+                      </ion-select>
                   </ion-item>
+              </ion-col>
 
+              <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Ingrediente</ion-label>
                       <ion-select name="ingredient" placeholder="Ingrediente" ngModel required text-center>
@@ -54,13 +56,15 @@
                           </ng-container>
                       </ion-select>      
                   </ion-item>
+              </ion-col>
 
+              <ion-col col-2>
                   <ion-item class="quantityItem">
                       <ion-input type="number" name="amount" placeholder="0" [(ngModel)]="amount" required text-center></ion-input>
                   </ion-item>
               </ion-col>
 
-              <ion-col col-2 no-padding>
+              <ion-col col-2>
                   <button ion-button color="tertiary" type="submit" block [disabled]="!f.valid" float-right>+</button>
               </ion-col>
           </ion-row>      

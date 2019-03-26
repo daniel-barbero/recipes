@@ -6,7 +6,7 @@ import { RecipesProvider } from '../../providers/recipes/recipes';
 import { ListIngredientService } from '../../providers/ingredients/listIngredientService';
 
 import { Ingredient } from "../../models/ingredient.model";
-import { ListItems } from '../../models/list.items.model';
+import { ListItems } from "../../models/list.items.model";
 
 @Component({
   selector: 'page-pantry',
@@ -105,6 +105,7 @@ export class PantryPage {
       console.log(form);
       console.log(form.value.ingredient);
       var addItemAction = this.slService.addItem(this.arrayIngredients[form.value.ingredient].name, form.value.amount, 'NO', form.value.categoria, form.value.ingredient);
+      
       if (addItemAction){
           this.listModified = true;
           this.loadItems();
@@ -114,6 +115,7 @@ export class PantryPage {
         this.showFooter();
         this.onAlertError("El elemento ya existe en la lista. Añada manualmente más elementos.")
       }
+
       form.reset({ amount: 1});
   }
 
@@ -132,11 +134,12 @@ export class PantryPage {
         calculate = item.amount +1;
       }
       else {
-        calculate = item.amount -1;
-        if ( calculate == 0) {
-            this.removeItem(index);
-            return false;
-        }
+          calculate = item.amount -1;
+          
+          if ( calculate == 0) {
+              this.removeItem(index);
+              return false;
+          }
       }
       
       item.amount = calculate;

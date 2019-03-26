@@ -49,6 +49,11 @@ export class RecipesProvider {
         return this.http.get(APPCONFIG.API+'list/'+table+'/'+filter+'&'+order).map(response => response.json())
         .catch((error:any) => Observable.throw(error || 'server error'));
     }
+    /*
+    getFreezerandPantry () : Observable<any> {
+      return this.http.get(APPCONFIG.API+'listFreezerandPantr/').map(response => response.json())
+      .catch((error:any) => Observable.throw(error || 'server error'));
+    }*/
 
     updateList(ingredients: Array<ListItems>, table){
         return this.http.post(APPCONFIG.API+'updateList/'+table, ingredients).map(response => response.json())

@@ -49,9 +49,11 @@ h1 {
   line-height: 2.4rem;
 }
 
+
 // ***************************************************************************//
 //          GENERAL CLASSES
 // ***************************************************************************//
+
 h1, h2, h3, h4, h5, h6,
 strong,
 .boldFont {
@@ -180,9 +182,49 @@ button[ion-item] .input-cover {
   display: none;
 }
 
+ion-footer form .grid {
+
+  [col-4] .item-md {
+      padding-left: 5px;
+  }
+
+  .categoryItem {
+      .item-inner {
+          padding-right: 0;
+          background: #536369;
+          border-bottom: 0;
+      }
+  }
+
+  .select-md {
+      max-width: 100%;
+      width: 100%;
+      padding: 0;
+      .select-icon { width: 1.8rem;}
+  }
+
+  .text-input-md, 
+  .select-text {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #fff;
+  }
+
+  .quantityItem.item-md.item-block .item-inner {
+      border-bottom: 0;
+  }
+
+  .button-block-md,
+  .button-block-ios {
+      width: 3.6rem;
+      margin-right: .5rem;
+  }
+}
+
 // ***************************************************************************//
 //         MODAL  
 // ***************************************************************************//
+
 .select-alert .alert-button-group button:nth-child(2),
 .alertOK .alert-button-group button,
 .alertKO .alert-button-group button {
@@ -221,9 +263,16 @@ button[ion-item] .input-cover {
   }
 }
 
+.alert-md .alert-radio-group,
+.alert-md .alert-checkbox-group {
+    max-width: 90%;
+    max-height: 65vh;
+}
+
 // ***************************************************************************//
 //         ACTION SHEET  
 // ***************************************************************************//
+
 .action-sheet-cancel.action-sheet-button .button-inner {
   display: block;
   width: 12rem;

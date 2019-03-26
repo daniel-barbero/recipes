@@ -5,11 +5,12 @@ page-shopping-list {
       background-position: bottom;
       background-repeat: no-repeat;
   }
+
   .searchbar-md {
       background: $color-theme5;
   }
 
-  .grid {
+  form .grid {
       margin: 1rem 0;
       padding-right: 0;
       border-radius: 0.4rem;
@@ -40,7 +41,9 @@ page-shopping-list {
       li {
           display: inline-block;
           margin: .3rem;
-          button { padding: .6rem;}
+          button { 
+            padding: .6rem;
+          }
       }
   }
 
@@ -69,6 +72,14 @@ page-shopping-list {
               font-size: 2.2rem;
               color: $color-theme3;
           }
+      }
+  }
+
+  ion-footer {
+      .button-md {
+          margin: 0;
+          border-radius: 0;
+          box-shadow: none;
       }
   }
 }

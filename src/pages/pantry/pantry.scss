@@ -28,49 +28,6 @@ page-pantry {
         color:#ccc !important;
     }
 
-    .grid {
-
-        [col-10] {
-            padding: 0;
-        }
-
-        .quantityItem {
-            display: inline-block;
-            width: 30%;
-        }
-
-        .categoryItem {
-            display: inline-block;
-            width: 68%;
-            
-            .item-inner {
-                padding-right: 0;
-                background: #536369;
-            }
-        }
-
-        .select-md {
-            max-width: 100%;
-            width: 100%;
-            padding: 0;
-            .select-icon { width: 1.8rem;}
-        }
-
-        .text-input-md, 
-        .select-text {
-            margin: 0;
-            font-size: 1.4rem;
-            color: #fff;
-        }
-
-        .button-block-md,
-        .button-block-ios {
-            width: 3.6rem;
-            height: 8rem;
-            margin: 1rem 0;
-        }
-    }
-
     ion-footer {
         background: color($colors, primary);
     }

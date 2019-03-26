@@ -35,10 +35,10 @@
 </ion-content>
 
 <ion-footer [ngClass]="{'displayNone': !showFooterState}">
-  <form #f="ngForm" (ngSubmit)="addItem(f)" padding-horizontal>
-      <ion-grid>
+  <form #f="ngForm" (ngSubmit)="addItem(f)">
+      <ion-grid no-padding>
           <ion-row>
-              <ion-col col-10>
+              <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Categoría</ion-label>
                       <ion-select name="categoria" placeholder="Categoría" ngModel (ionChange)="categorySelected($event)" required text-center>
@@ -47,7 +47,9 @@
                          </ng-container>
                       </ion-select>      
                   </ion-item>
+              </ion-col>
 
+              <ion-col col-4>
                   <ion-item class="categoryItem">
                       <ion-label>Ingrediente</ion-label>
                       <ion-select name="ingredient" placeholder="Ingrediente" ngModel required text-center>
@@ -55,19 +57,16 @@
                               <ion-option value="{{ ingredient.id }}">{{ ingredient.name }}</ion-option>
                            </ng-container>
                       </ion-select>      
-                  </ion-item>
-                  
-                  <!--
-                  <ion-item>
-                      <ion-input type="text" name="ingredientName" placeholder="Ingrediente" ngModel required></ion-input>
-                  </ion-item>-->
+                  </ion-item>                
+              </ion-col>
 
+              <ion-col col-2>
                   <ion-item class="quantityItem">
                       <ion-input type="number" name="amount" placeholder="0" [(ngModel)]="amount" required text-center></ion-input>
                   </ion-item>
               </ion-col>
 
-              <ion-col col-2 no-padding>
+              <ion-col col-2>
                   <button ion-button color="tertiary" type="submit" block [disabled]="!f.valid" float-right>+</button>
               </ion-col>
 

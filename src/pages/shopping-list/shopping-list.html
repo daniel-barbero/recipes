@@ -15,7 +15,7 @@
       <ion-grid>
           <ion-row>
               <ion-item ion-col col-8>
-                <ion-input type="text" name="name" placeholder="Ingrediente" [(ngModel)]="name" required readonly></ion-input>
+                <ion-input type="text" name="name" placeholder="Ingrediente" [(ngModel)]="name" required></ion-input>
                 <input type="hidden" name="category" [(ngModel)]="category" />
                 <input type="hidden" name="idIngredient" [(ngModel)]="idIngredient" />
               </ion-item>
@@ -28,15 +28,17 @@
                 <button ion-button type="submit" block [disabled]="!f.valid" float-right>+</button>
               </ion-col>
           </ion-row>
+
           <ion-row>
-            <ion-col col-8>
+            <ion-col>
               <ion-list>
                     <li *ngFor="let ingredient of ingredientsView;">
                       <button (click)="selectIngredient(ingredient.id, ingredient.name, ingredient.categoria)">{{ ingredient.name }}</button>
                     </li>
               </ion-list>
             </ion-col>
-          </ion-row>   
+          </ion-row>
+              
       </ion-grid>
     </form>
 
@@ -60,5 +62,14 @@
 </ion-content>
 
 <ion-footer>
-    <button ion-button block (click)="saveData(listItems)">Guardar lista</button>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col col-6>
+            <button ion-button block (click)="moveData(listItems)" color="secondary">Pasar a despensa</button>
+        </ion-col>
+        <ion-col col-6>
+            <button ion-button block (click)="saveData(listItems)">Guardar lista</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-footer>

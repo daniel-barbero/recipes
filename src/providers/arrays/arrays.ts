@@ -19,7 +19,7 @@ export class ArraysService {
     console.log('arrayService: ' + this.arrayElement);
   }
 
-  clearItems(){
+  clearItems() {
     this.arrayElement = [];
   }
 }

@@ -104,6 +104,7 @@ export class FridgePage {
 
   addItem(form: NgForm) {
       var addItemAction = this.slService.addItem(this.arrayIngredients[form.value.ingredient].name, form.value.amount, 'NO', form.value.categoria, form.value.ingredient);
+      
       if (addItemAction){
           this.listModified = true;
           this.loadItems();
@@ -113,28 +114,32 @@ export class FridgePage {
         this.showFooter();
         this.onAlertError("El elemento ya existe en la lista. Añada manualmente más elementos.")
       }
+
       form.reset({ amount: 1});
   }
 
-  removeItem(id: number) {
+  removeItem(id_ingredient: number) {
       this.slService.removeItem(id_ingredient, 'id');
       this.listModified = true;
       this.loadItems();
+
       if(this.filterActive){ this.setFilter();}
   }
 
   updateItem(index: number, item: ListItems, action: string) {
       console.log(item.amount);
       let calculate: number;
+
       if ( action == 'more'){
         calculate = item.amount +1;
       }
       else {
-        calculate = item.amount -1;
-        if ( calculate == 0) {
-          this.removeItem(index);
-          return false;
-        }
+          calculate = item.amount -1;
+          
+          if ( calculate == 0) {
+            this.removeItem(index);
+            return false;
+          }
       }
       
       item.amount = calculate;

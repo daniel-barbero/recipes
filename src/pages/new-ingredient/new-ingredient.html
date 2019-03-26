@@ -11,12 +11,14 @@
               <ion-col>
                   <ion-item class="categoryItem">
                       <ion-label>Categorías</ion-label>
-                      <ion-select name="categoria" placeholder="Categoría" (ionChange)="categorySelected($event)" ngModel required text-center>
+                      <ion-select name="categoria" placeholder="Categoría" ngModel required text-center
+                      (ionChange)="categorySelected($event)" 
+                      interface="action-sheet"
+                      [selectOptions]="selectCategories">
                         <ng-container *ngFor="let categoria of categories">
-                          <ion-option value="{{ categoria.type }}" *ngIf="categoria.id < 10">{{ categoria.name }} (Despensa)</ion-option>
-                          <ion-option value="{{ categoria.type }}" *ngIf="categoria.id > 10">{{ categoria.name }} (Congelador)</ion-option> 
+                          <ion-option value="{{ categoria.type }}">{{ categoria.name }}</ion-option>
                         </ng-container>
-                      </ion-select>      
+                      </ion-select>
                   </ion-item>
                   
                   <ion-item>

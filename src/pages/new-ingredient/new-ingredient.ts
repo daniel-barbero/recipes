@@ -11,6 +11,10 @@ import { Ingredient } from "../../models/ingredient.model";
   templateUrl: 'new-ingredient.html',
 })
 export class NewIngredientPage {
+  selectCategories = {
+    cssClass: 'option-categories page-new-ingredient'
+  };
+
   public categories;
   arrayCategories = [];
   public categoriaSelected = '';

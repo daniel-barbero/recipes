@@ -292,6 +292,9 @@ ion-footer form .grid {
     vertical-align: top;
     border-radius: 4px;
 }
+.page-new-ingredient.option-categories.action-sheet-md .action-sheet-button:not(.action-sheet-cancel):nth-child(n+9) {
+    background: $color-theme3;
+}
 .action-sheet-cancel.action-sheet-button .button-inner {
   display: block;
   width: 12rem;

@@ -191,7 +191,7 @@ export class InputRecipe implements OnInit {
               }    
            },
            error => {
-              console.log(error);
+              this.onAlertError('Error de acceso a la base de datos', error);
            }
         );
       }

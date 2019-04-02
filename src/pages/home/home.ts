@@ -184,6 +184,7 @@ export class HomePage {
         const alert = this.alertCtrl.create({
             title: 'Borrar receta',
             message: '¿Estás seguro de que quieres borrar esta receta?',
+            cssClass: 'alertWarning',
             buttons: [
                 {
                 text: 'Ok',
@@ -213,6 +214,7 @@ export class HomePage {
         const alert = this.alertCtrl.create({
             title: 'Error de acceso',
             message: error,
+            cssClass: 'alertKO',
             buttons: [
               {
                 text: 'Ok',
@@ -230,6 +232,7 @@ export class HomePage {
         const alert = this.alertCtrl.create({
             title: 'Acción realizada con éxito',
             message: msg,
+            cssClass: 'alertOK',
             buttons: [
               {
                 text: 'Ok',

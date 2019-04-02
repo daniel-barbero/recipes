@@ -96,6 +96,7 @@ export class NewIngredientPage {
       const alert = this.alertCtrl.create({
           title: 'Error en la base de datos',
           message: error,
+          cssClass: 'alertKO',
           buttons: [
             {
               text: 'Ok'

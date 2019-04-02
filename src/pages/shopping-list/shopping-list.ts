@@ -206,6 +206,7 @@ export class ShoppingListPage {
                                   }
                                   else {
                                     // sin categoria
+                                    console.log(ingredientsList[k]);
                                   }
                                   
                             });
@@ -243,7 +244,6 @@ export class ShoppingListPage {
           }
       );
   }
-
 
 
   onLoadData() {
@@ -301,6 +301,7 @@ export class ShoppingListPage {
       const alert = this.alertCtrl.create({
           title: 'Error de acceso',
           message: error,
+          cssClass: 'alertKO',
           buttons: [
             {
               text: 'Ok',
@@ -330,6 +331,28 @@ export class ShoppingListPage {
     });
     
     alert.present();
+  }
+
+  onAlertMoveData(ingredientsList) {
+      const alert = this.alertCtrl.create({
+          title: 'Pasar a despensa',
+          message: '¿Estás seguro de que quieres pasar la lista a la despensa?',
+          cssClass: 'alertWarning',
+          buttons: [
+              {
+              text: 'Ok',
+              handler: () => {
+                this.moveData(ingredientsList);
+              }
+              },
+              {
+                text: 'Cancelar',
+                role: 'cancel'
+              }
+          ]
+      });
+
+      alert.present();
   }
 
 }

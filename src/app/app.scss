@@ -263,6 +263,22 @@ ion-footer form .grid {
   }
 }
 
+.alertWarning {
+  .alert-button-group button:first-child {
+    min-width: 8rem;
+    background: color($colors, primary);
+    color: #fff;
+
+     .button-inner {
+        justify-content: center;
+    }
+  }
+  .alert-button-group button:nth-child(2) {
+    background: color($colors, danger);
+    color: #fff;
+  }
+}
+
 .alert-md .alert-radio-group,
 .alert-md .alert-checkbox-group {
     max-width: 90%;

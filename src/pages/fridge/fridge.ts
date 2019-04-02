@@ -222,6 +222,7 @@ export class FridgePage {
       const alert = this.alertCtrl.create({
           title: 'Error al guardar los datos',
           message: error,
+          cssClass: 'alertKO',
           buttons: [
             {
               text: 'Ok'

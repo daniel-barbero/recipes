@@ -37,7 +37,10 @@
               <ion-col *ngIf="ingredientsView != null">
                   <h5>Elementos ya añadidos en {{ categoriaSelected }}</h5>
                   <ion-list>
-                      <ion-badge *ngFor="let ingredient of ingredientsView" color="secondary">{{  ingredient.name }}</ion-badge>
+                      <ion-badge *ngFor="let ingredient of ingredientsView; let i = index" color="secondary"
+                        (press)="pressEvent($event, i)">{{ ingredient.name }} 
+                        <ion-icon *ngIf="showElement === i" (click)="removeIngredient(ingredient.id)" name="md-close-circle"></ion-icon>
+                      </ion-badge>
                   </ion-list>                
               </ion-col>
           </ion-row>

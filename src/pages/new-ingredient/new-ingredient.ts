@@ -14,7 +14,7 @@ export class NewIngredientPage {
   selectCategories = {
     cssClass: 'option-categories page-new-ingredient'
   };
-
+  categoria:string;
   public categories;
   arrayCategories = [];
   public categoriaSelected = '';
@@ -22,6 +22,7 @@ export class NewIngredientPage {
   ingredients: Ingredient[];
   ingredientsView: Ingredient[];
 
+  public showElement: Number;
 
   constructor(
       private recipesProvider: RecipesProvider,
@@ -43,21 +44,8 @@ export class NewIngredientPage {
                           name: this.categories[i].name
                       };
                   }
-                  console.log(this.categories);
-                  
-                  this.recipesProvider.getList('ingredients', 'all', 'name').subscribe(
-                      result => {
-                          if (typeof result === 'string'){
-                              this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
-                          }
-                          else {
-                              this.ingredients = result;
-                          }
-                      },
-                      error => {
-                          this.onAlertError(error);
-                      }
-                  );
+
+                  this.getIngredients();
               }
           },
           error => {
@@ -66,7 +54,26 @@ export class NewIngredientPage {
       );
   }
 
-  categorySelected(idCategory: string){
+  getIngredients(){
+      this.recipesProvider.getList('ingredients', 'all', 'name').subscribe(
+          result => {
+              if (typeof result === 'string'){
+                  this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+              }
+              else {
+                  this.ingredients = result;
+              }
+              return true;
+          },
+          error => {
+              this.onAlertError(error);
+          }
+      );
+  }
+
+  public categorySelected(idCategory: string){
+      console.log(idCategory);
+      this.categoria = idCategory;
       this.categoriaSelected = this.arrayCategories[idCategory].name;
       this.ingredientsView = this.ingredients;
       this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
@@ -83,13 +90,21 @@ export class NewIngredientPage {
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
-                  this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                  this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')), this.categoriaSelected);
               }    
           },
           error => {
               console.log(error);
           }
       );
+  }
+
+  pressEvent(e, index) {
+      this.showElement = index; 
+  }
+
+  removeIngredient(idIngredient){
+      this.onAlertDelete(idIngredient);
   }
 
   onAlertError(error) {
@@ -107,19 +122,55 @@ export class NewIngredientPage {
       alert.present();
   }
 
-  onAlertSuccess(msg) {
+  onAlertSuccess(msg, idCategory) {
       const alert = this.alertCtrl.create({
           title: 'Lista de ingredientes actualizada con éxito',
           message: msg,
           cssClass: 'alertOK',
           buttons: [
             {
-              text: 'Ok'
+              text: 'Ok',
+              handler: () => {
+                  this.getIngredients();
+                  setTimeout( () => {
+                        this.categorySelected(this.categoria);
+                  }, 100)
+              }
             }
           ]
       });
       
       alert.present();
   }
+
+  onAlertDelete(idIngredient) {
+    const alert = this.alertCtrl.create({
+        title: 'Borrar Ingrediente',
+        message: '¿Estás seguro de que quieres borrar este ingrediente?',
+        cssClass: 'alertWarning',
+        buttons: [
+            {
+            text: 'Ok',
+            handler: () => {
+                this.recipesProvider.deleteElement(idIngredient, 'ingredients').subscribe(
+                  result => {
+                    if (result.includes('error')){
+                        this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                    }
+                    else {
+                        this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')), this.categoriaSelected);
+                    }    
+                  });
+            }
+            },
+            {
+              text: 'Cancelar',
+              role: 'cancel'
+            }
+        ]
+    });
+
+    alert.present();
+}
 
 }

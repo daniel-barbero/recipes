@@ -189,7 +189,7 @@ export class HomePage {
                 {
                 text: 'Ok',
                 handler: () => {
-                    this.recipesProvider.deleteRecipe(idRecipe).subscribe(
+                    this.recipesProvider.deleteElement(idRecipe, 'recipe').subscribe(
                       result => {
                         if (result.includes('error')){
                             this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));

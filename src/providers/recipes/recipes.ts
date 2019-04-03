@@ -37,15 +37,15 @@ export class RecipesProvider {
         .catch((error:any) => Observable.throw(error || 'server error'));
     } 
 
-    deleteRecipe(id: number) {
-        return this.http.delete(APPCONFIG.API+'delete/'+id).map(response => response.json())
+    deleteElement(id: number, table: string) {
+        return this.http.delete(APPCONFIG.API+'delete/'+table+'/'+id).map(response => response.json())
         .catch((error:any) => Observable.throw(error || 'server error'));
     }
 
 
     ////////////////       SHOPPING LIST - FRIDGE - PANTRY            //////////////////////
     
-    getList(table:string, filter:string, order:string): Observable<any> {
+    getList(table: string, filter: string, order: string): Observable<any> {
         return this.http.get(APPCONFIG.API+'list/'+table+'/'+filter+'&'+order).map(response => response.json())
         .catch((error:any) => Observable.throw(error || 'server error'));
     }

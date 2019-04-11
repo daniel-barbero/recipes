@@ -16,7 +16,7 @@ import { Ingredient } from '../../models/ingredient.model';
 export class ShoppingListPage {
   name: string = '';
   amount: number = 1;
-  idIngredient: number;
+  idIngredient: number = 0;
   category: string = '';
 
   ingredients: Ingredient[];
@@ -50,7 +50,7 @@ export class ShoppingListPage {
 
   addItem(form: NgForm) {
       this.listIngredientService.addItem(form.value.name, form.value.amount, 'NO', form.value.category, form.value.idIngredient);
-      form.reset({ amount: 1});
+      form.reset({ amount: 1, category: '', idIngredient: 0});
       this.searchTerm = '';
       this.ingredientsView = [];
       this.loadItems();

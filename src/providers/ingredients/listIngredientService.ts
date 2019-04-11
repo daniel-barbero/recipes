@@ -6,7 +6,7 @@ export class ListIngredientService {
   addItem(name: string, amount: number, urgencia?: string, categoria?: string, id?: number) {
     let exists = false;
     this.ingredients.some(function (elem, i) {
-      return elem.id_ingredient === id ? exists = true : false;
+      return elem.id_ingredient === id && elem.id_ingredient != 0? exists = true : false;
     });
 
     if (!exists) {

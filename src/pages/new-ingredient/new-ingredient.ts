@@ -134,7 +134,7 @@ export class NewIngredientPage {
                   this.getIngredients();
                   setTimeout( () => {
                         this.categorySelected(this.categoria);
-                  }, 100)
+                  }, 300)
               }
             }
           ]

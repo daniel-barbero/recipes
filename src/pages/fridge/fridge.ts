@@ -139,11 +139,12 @@ export class FridgePage {
       console.log(item.amount);
       let calculate: number;
 
+
       if ( action == 'more'){
-        calculate = item.amount +1;
+        calculate = Number(item.amount) + 1;
       }
       else {
-          calculate = item.amount -1;
+          calculate = Number(item.amount) - 1;
           
           if ( calculate == 0) {
             this.removeItem(index);

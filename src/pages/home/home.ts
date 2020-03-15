@@ -37,7 +37,7 @@ export class HomePage {
     }
 
     ionViewWillEnter() {
-        // console.log('ionViewWillEnter HOME');
+        console.log('ionViewWillEnter HOME');
         if (APPCONFIG.reloadList){
             if ( this.page > -1 && this.reActiveInfinite != undefined) { 
               this.reActiveInfinite.enable(true);
@@ -59,12 +59,13 @@ export class HomePage {
         loadingSpinner.present();
         
         console.log('page: ' + this.page + ' - category: ' + this.category);
+        
         this.recipesProvider.getRecipes(this.page, this.category)
         .subscribe(
             result => {
                 if (typeof result === 'string'){
                     loadingSpinner.dismiss();
-                    // console.log(result);
+                    //console.log(result);
                     this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                 }
                 else {
@@ -73,14 +74,21 @@ export class HomePage {
                         this.listRecipe.push(new Recipe(element.id,
                                                   element.title,
                                                   element.ingredients,
+                                                  element.ingredientsID,
+                                                  element.quantity,
+                                                  element.ingredientsCategory,
                                                   element.advices,
                                                   element.category,
                                                   element.img,
                                                   element.noteDani,
                                                   element.noteDolores, 
-                                                  element.noteAverage));
+                                                  element.noteAverage, 
+                                                  element.mainIngredient,
+                                                  element.advice));
                       }
                     );
+                    console.log(this.listRecipe);
+
                     APPCONFIG.reloadList = false;
                     loadingSpinner.dismiss();
                 }

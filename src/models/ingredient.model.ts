@@ -1,12 +1,14 @@
 export class Ingredient  {
-    
+    id: string;
     name: string;
     categoria: string;
-    id: string;
+    quantity:string;
+
     
-    constructor(name: string, categoria?:string, id?: string ) {
+    constructor(id: string, name: string, categoria?:string, quantity?:string  ) {
+        this.id = id;
         this.name = name;
         this.categoria = (categoria === undefined ) ? 'null' : categoria;
-        this.id = id;
+        this.quantity = (quantity === undefined ) ? '1' : quantity;
     } 
 }

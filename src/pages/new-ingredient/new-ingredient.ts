@@ -14,6 +14,7 @@ export class NewIngredientPage {
   selectCategories = {
     cssClass: 'option-categories page-new-ingredient'
   };
+
   categoria:string;
   public categories;
   arrayCategories = [];

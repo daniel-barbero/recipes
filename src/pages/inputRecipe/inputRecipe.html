@@ -48,9 +48,9 @@
           </ion-select>
         </ion-item>
 
-        <button ion-item type="button" (click)="editIngredients(recipe.ingredients)">
+        <button ion-item type="button" (click)="editIngredients(recipe.mainIngredient)">
             <ion-label stacked>Ingredientes</ion-label>
-            <ion-input type="hidden" name="ingredients" [(ngModel)]="recipe.ingredients"></ion-input>
+            <ion-input type="hidden" name="ingredients" [(ngModel)]="recipe.mainIngredient"></ion-input>
             <ion-label text-wrap>{{ recipe.ingredients }}</ion-label>
         </button>
 

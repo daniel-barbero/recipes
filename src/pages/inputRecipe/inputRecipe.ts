@@ -10,7 +10,8 @@ import { ImageResizer } from '@ionic-native/image-resizer';
 import { File }  from '@ionic-native/file';
 
 import { Recipe } from '../../models/recipe.model';
-import { EditionPage } from '../edition/edition';
+import { EditionIngredients } from './../edition/editionIngredients';
+import { EditionAdvices } from './../edition/editionAdvices';
 
 
 @Component({
@@ -56,7 +57,8 @@ export class InputRecipe implements OnInit {
             this.dataurl = this.urlImg + this.recipe.img;
          }
       }
-      console.log('ngOnInit INPUTRECIPE: ' + this.recipe);
+      console.log('ngOnInit INPUTRECIPE:');
+      console.log(this.recipe);
   }
 
   openSelectorImage() {
@@ -158,9 +160,10 @@ export class InputRecipe implements OnInit {
   }
 
   saveRecipe(form: NgForm){
-      console.log('saveRecipe function: ' + form.value);
+      console.log('saveRecipe function: ');
+      console.log(form.value);
       this.recipe = form.value;
-
+      /*
       if (form.value.id == 0){
         this.recipesProvider.createRecipe(form.value).subscribe(
             result => {
@@ -203,19 +206,21 @@ export class InputRecipe implements OnInit {
            }
         );
       }
+      */
   }
 
   editIngredients(ingredients: any){
       let modal: any;
       if (this.recipe.id === '0'){
-        modal = this.modalCtrl.create(EditionPage, {type: 'Ingredientes', stringField: '', split: ''});
+        modal = this.modalCtrl.create(EditionIngredients, {type: 'Ingredientes', stringField: '', split: ''});
       }
       else {
-        modal = this.modalCtrl.create(EditionPage, {type: 'Ingredientes', stringField: ingredients, split: ','});        
+        modal = this.modalCtrl.create(EditionIngredients, {type: 'Ingredientes', stringField: ingredients, split: ','});        
       }
 
       modal.onDidDismiss(data => {
-         console.log('onDidDismiss: ' + data);
+         console.log('onDidDismiss:');
+         console.log(data);
          if ( data !== undefined ){
             this.recipe.ingredients = data.content.join();  // array to string
          }
@@ -227,10 +232,10 @@ export class InputRecipe implements OnInit {
   editAdvices(advices: any) {
       let modal: any;
       if (this.recipe.id === '0'){
-        modal = this.modalCtrl.create(EditionPage, {type: 'Consejos', stringField: '', split: ''});
+        modal = this.modalCtrl.create(EditionAdvices, {type: 'Consejos', stringField: '', split: ''});
       }
       else {
-        modal = this.modalCtrl.create(EditionPage, {type: 'Consejos', stringField: advices, split: '.'});        
+        modal = this.modalCtrl.create(EditionAdvices, {type: 'Consejos', stringField: advices, split: '.'});        
       }
         
       modal.onDidDismiss(data => {

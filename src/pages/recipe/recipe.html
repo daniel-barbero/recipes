@@ -12,15 +12,16 @@
 
       <ion-item>
           <span class="font-book colorSecondary">{{ recipe.category }}</span>
-          <ion-badge color="primary">{{ recipe.noteDani }}</ion-badge>
+          <ion-badge color="tertiary">{{ recipe.noteDani }}</ion-badge>
           <ion-badge color="secondary">{{ recipe.noteDolores }}</ion-badge>            
           <button ion-button item-end [navPush]="inputRecipe" [navParams]="recipe">Editar</button>
       </ion-item>
       
       <ul>
         <ng-container>
-            <li *ngFor="let ingredient of recipe.mainIngredient">{{ ingredient.name }}</li>
-            <!-- {{ ingredient.amount}}</li>-->     
+            <li *ngFor="let ingredient of recipe.mainIngredient">
+              <span>{{ ingredient.quantity}}</span> <span>{{ ingredient.name }}</span>
+            </li> 
         </ng-container>
       </ul> 
       

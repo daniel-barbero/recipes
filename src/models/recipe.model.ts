@@ -7,6 +7,7 @@ export interface RecipeInterface {
     ingredients: string;
     ingredientsID: string;
     ingredientsQuantity:string;
+    ingredientsQuantityUnit:string;
     ingredientsCategory:string;
     advices: string;
     category: string;
@@ -24,6 +25,7 @@ export class Recipe implements RecipeInterface {
     private _ingredients = '';
     private _ingredientsID = '';
     private _ingredientsQuantity = '';
+    private _ingredientsQuantityUnit = '';
     private _ingredientsCategory = '';
     private _advices = '';
     private _category = '';
@@ -49,6 +51,9 @@ export class Recipe implements RecipeInterface {
     get ingredientsQuantity(): string { return this._ingredientsQuantity; }
     set ingredientsQuantity(ingredientsQuantity: string) { this._ingredientsQuantity = (ingredientsQuantity != null) ? ingredientsQuantity : "";}
 
+    get ingredientsQuantityUnit(): string { return this._ingredientsQuantityUnit; }
+    set ingredientsQuantityUnit(ingredientsQuantityUnit: string) { this._ingredientsQuantityUnit = (ingredientsQuantityUnit != null) ? ingredientsQuantityUnit : "";}
+    
     get ingredientsCategory(): string { return this._ingredientsCategory; }
     set ingredientsCategory(ingredientsCategory: string) { this._ingredientsCategory = (ingredientsCategory != null) ? ingredientsCategory : "";}
 
@@ -89,10 +94,11 @@ export class Recipe implements RecipeInterface {
           const splittedIngredients = this.ingredients.split(',');
           const splittedIngredientsID = this.ingredientsID.split(',');
           const splittedingredientsQuantity = this.ingredientsQuantity.split(','); 
+          const splittedingredientsQuantityUnit = this.ingredientsQuantityUnit.split(','); 
           const splittedingredientsCategory = this.ingredientsCategory.split(',');
           
           splittedIngredients.forEach( (element, index) => {
-              this._mainIngredient.push(new Ingredient(splittedIngredientsID[index], element, splittedingredientsCategory[index], splittedingredientsQuantity[index]));
+              this._mainIngredient.push(new Ingredient(splittedIngredientsID[index], element, splittedingredientsCategory[index], splittedingredientsQuantity[index], splittedingredientsQuantityUnit[index]));
           });
         }
     }
@@ -116,6 +122,7 @@ export class Recipe implements RecipeInterface {
         ingredients?: string,
         ingredientsID?: string,
         ingredientsQuantity?: string,
+        ingredientsQuantityUnit?: string,
         ingredientsCategory?: string,
         advices?: string,
         category?: string,
@@ -131,6 +138,7 @@ export class Recipe implements RecipeInterface {
         this.ingredients = ingredients;
         this.ingredientsID = ingredientsID;
         this.ingredientsQuantity = ingredientsQuantity;
+        this.ingredientsQuantityUnit = ingredientsQuantityUnit;
         this.ingredientsCategory = ingredientsCategory;
         this.advices = advices;
         this.category = category;

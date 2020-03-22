@@ -76,6 +76,7 @@ export class HomePage {
                                                   element.ingredients,
                                                   element.ingredientsID,
                                                   element.quantity,
+                                                  element.quantityUnit,
                                                   element.ingredientsCategory,
                                                   element.advices,
                                                   element.category,

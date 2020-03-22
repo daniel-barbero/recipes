@@ -12,7 +12,8 @@ import { HomePage } from '../pages/home/home';
 import { RecipePage } from '../pages/recipe/recipe';
 import { PantryPage } from '../pages/pantry/pantry';
 import { InputRecipe } from '../pages/inputRecipe/inputRecipe';
-import { EditionPage } from '../pages/edition/edition';
+import { EditionIngredients } from '../pages/edition/editionIngredients';
+import { EditionAdvices } from '../pages/edition/editionAdvices';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { FridgePage } from '../pages/fridge/fridge';
 import { NewIngredientPage } from '../pages/new-ingredient/new-ingredient';
@@ -38,7 +39,8 @@ import { File } from '@ionic-native/file';
     RecipePage,
     PantryPage,
     InputRecipe,
-    EditionPage,
+    EditionIngredients,
+    EditionAdvices,
     ShoppingListPage,
     FridgePage,
     NewIngredientPage
@@ -56,7 +58,8 @@ import { File } from '@ionic-native/file';
     RecipePage,
     PantryPage,
     InputRecipe,
-    EditionPage,
+    EditionIngredients,
+    EditionAdvices,
     ShoppingListPage,
     FridgePage,
     NewIngredientPage

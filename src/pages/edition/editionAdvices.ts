@@ -6,10 +6,10 @@ import { ArraysService } from '../../providers/arrays/arrays';
 
 @Component({
     selector: 'page-edition',
-    templateUrl: 'edition.html'
+    templateUrl: 'editionAdvices.html'
 })
 
-export class EditionPage implements OnInit {
+export class EditionAdvices implements OnInit {
     arrayElements = [];
     title: string;
 
@@ -20,13 +20,18 @@ export class EditionPage implements OnInit {
 
     ngOnInit(){
 
-        if (this.navParams.data.stringField != ''){
+        if (this.navParams.data.stringField != '' && this.navParams.data.type == 'Consejos'){
             this.arrayElements = this.navParams.data.stringField.split(this.navParams.data.split);
+            this.arrayService.addItems(this.arrayElements);
+        }
+        else if (this.navParams.data.stringField != '' && this.navParams.data.type == 'Ingredientes'){
+            this.arrayElements = this.navParams.data.stringField;
             this.arrayService.addItems(this.arrayElements);
         }
 
         this.title = this.navParams.data.type;
-        console.log('ngOnInit EDITION: ' + this.arrayElements);
+        console.log('ngOnInit EDITION: '); 
+        console.log(this.arrayElements);
     }
 
     ionViewWillEnter() {

@@ -1,7 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ViewController, reorderArray  } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
+//import { NgForm } from '@angular/forms';
 
 import { RecipesProvider } from '../../providers/recipes/recipes';
 
@@ -17,6 +16,9 @@ export class EditionIngredients implements OnInit {
     arrayElements = [];
     title: string;
     ingredients: Ingredient[];
+    ingredientsFiltered: Ingredient[];
+
+    searchTerm: string;
 
     constructor ( private navParams: NavParams,
                   private viewCtrl: ViewController,
@@ -70,8 +72,7 @@ export class EditionIngredients implements OnInit {
                                                   element.name,
                                                   element.categoria,
                                                   element.quantity,
-                                                  element.quantityUnit,
-                                                  ));
+                                                  element.quantityUnit ));
                       }
                     );
                 }
@@ -81,15 +82,22 @@ export class EditionIngredients implements OnInit {
                 console.log('error');
             }
         );
-        
     }
 
+    addIngredient(ingredient){
+        console.log(ingredient);
+        this.arrayService.addItem(ingredient);
+        this.searchTerm = '';
+        this.onCancel();
+        this.loadItems();
+    }
+    /*
     onAddItem(form: NgForm){
         let ingredient = new Ingredient('1',form.value.itemName, 'Le', '1', '');
         this.arrayService.addItem(ingredient);
         form.reset();
         this.loadItems();
-    }
+    }*/
 
     updateItem(index:number, action:string){
         this.arrayService.updateItem(index, action);
@@ -108,19 +116,18 @@ export class EditionIngredients implements OnInit {
 
     searchIngredient(searchTerm){
         console.log(searchTerm);
-        if ( searchTerm.length < 1 ){
-
-        }
-        else if ( searchTerm.length >= 3 ){
-
+        if ( searchTerm.length >= 2 ){
             setTimeout(() => {
-              this.ingredients = this.ingredients.filter((ingredient:Ingredient) => {
+              this.ingredientsFiltered = this.ingredients.filter((ingredient:Ingredient) => {
                   return ingredient.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
               });
-            }, 500);     
+            }, 100);     
         }
+    }
 
-        
+    onCancel(){
+        console.log('onCancel SEARCH');
+        this.ingredientsFiltered = [];
     }
 
     onClose(){
@@ -131,7 +138,5 @@ export class EditionIngredients implements OnInit {
         console.log('ionViewWillUnload EDITION');
         this.arrayService.clearItems();
     }
-
-    
 
 }

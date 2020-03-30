@@ -161,12 +161,13 @@ export class InputRecipe implements OnInit {
 
   saveRecipe(form: NgForm){
       console.log('saveRecipe function: ');
-      console.log(form.value);
       this.recipe = form.value;
-      /*
+      console.log(this.recipe);
+
       if (form.value.id == 0){
         this.recipesProvider.createRecipe(form.value).subscribe(
             result => {
+                console.log(result);
                 if (result.includes('error')){
                     this.onAlertError('Error de acceso a la base de datos', result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                 }
@@ -178,9 +179,10 @@ export class InputRecipe implements OnInit {
                     else {
                       this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                     }
-                }    
+                }
             },
             error => {
+              console.log(error);
               this.onAlertError('Error de acceso a la base de datos', error);
             }
         );
@@ -188,8 +190,9 @@ export class InputRecipe implements OnInit {
       else {
         this.recipesProvider.updateRecipe(form.value.id, form.value).subscribe(
            result => {
+             
               if (result.includes('error')){
-                  this.onAlertError('Error de acceso a la base de datos',result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
+                  this.onAlertError('Error 1 de acceso a la base de datos',result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
                   APPCONFIG.reloadList = true;
@@ -199,14 +202,14 @@ export class InputRecipe implements OnInit {
                   else {
                       this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                   }
-              }    
+              } 
            },
            error => {
-              this.onAlertError('Error de acceso a la base de datos', error);
+              this.onAlertError('Error 2 de acceso a la base de datos', error);
            }
         );
       }
-      */
+      
   }
 
   editIngredients(ingredients: any){
@@ -221,8 +224,23 @@ export class InputRecipe implements OnInit {
       modal.onDidDismiss(data => {
          console.log('onDidDismiss:');
          console.log(data);
-         if ( data !== undefined ){
+         if ( data !== undefined && data.type != "Ingredientes"){
             this.recipe.ingredients = data.content.join();  // array to string
+         }
+         else if ( data !== undefined && data.type == "Ingredientes"){
+            // Ingredientes
+            this.recipe.ingredients = '';
+            this.recipe.mainIngredient = data.content;
+
+            data.content.forEach((ingredient, index, array) => {
+                if (index === (array.length -1)) {
+                    // This is the last one.
+                    this.recipe.ingredients += ingredient.name;
+                }
+                else {
+                    this.recipe.ingredients += ingredient.name + ', '; 
+                }
+            });
          }
       });
 

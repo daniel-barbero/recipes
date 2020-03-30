@@ -8,7 +8,7 @@
   </ion-header>
 
   <ion-content>
-      <ion-img [src]="urlImg + recipe.img"></ion-img>
+      <div class="imgFrame"><img [src]="urlImg + recipe.img" imageViewer /></div>
 
       <ion-item>
           <span class="font-book colorSecondary">{{ recipe.category }}</span>
@@ -20,7 +20,7 @@
       <ul>
         <ng-container>
             <li *ngFor="let ingredient of recipe.mainIngredient">
-              <span>{{ ingredient.quantity}}</span> <span>{{ ingredient.name }}</span>
+              <span>{{ ingredient.name }} <span *ngIf="ingredient.quantity > 1">({{ ingredient.quantity}})</span></span>
             </li> 
         </ng-container>
       </ul> 

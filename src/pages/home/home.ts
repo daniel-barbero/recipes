@@ -123,15 +123,21 @@ export class HomePage {
                   if (result.length > 0){
                       result.forEach(
                         element => {
-                          this.listRecipe.push(new Recipe(element.id,
-                                                    element.title,
-                                                    element.ingredients,
-                                                    element.advices,
-                                                    element.category,
-                                                    element.img,
-                                                    element.noteDani,
-                                                    element.noteDolores, 
-                                                    element.noteAverage));
+                            this.listRecipe.push(new Recipe(element.id,
+                                element.title,
+                                element.ingredients,
+                                element.ingredientsID,
+                                element.quantity,
+                                element.quantityUnit,
+                                element.ingredientsCategory,
+                                element.advices,
+                                element.category,
+                                element.img,
+                                element.noteDani,
+                                element.noteDolores, 
+                                element.noteAverage, 
+                                element.mainIngredient,
+                                element.advice));
                         }
                       );  
                   }

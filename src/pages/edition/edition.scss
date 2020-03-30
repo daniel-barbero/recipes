@@ -2,7 +2,12 @@ page-edition {
     button[item-end] {
         width: 2.5rem;
     }
-
+    
+    .badge-md {
+        margin: .4rem .25rem;
+        padding: .65rem;
+    }
+    
     ion-footer {
         .button-md {
             width: 48%;

@@ -43,14 +43,15 @@
             <ion-option value="cuchara">Cuchara</ion-option>
             <ion-option value="carne">Carne</ion-option>
             <ion-option value="pescado">Pescado y marisco</ion-option>
-            <ion-option value="verdura">Hortalizas</ion-option>
+            <ion-option value="verdura">Verduras</ion-option>
             <ion-option value="pasta">Pasta y arroz</ion-option>
+            <ion-option value="dulce">Postres y dulces</ion-option>
           </ion-select>
         </ion-item>
 
         <button ion-item type="button" (click)="editIngredients(recipe.mainIngredient)">
             <ion-label stacked>Ingredientes</ion-label>
-            <ion-input type="hidden" name="ingredients" [(ngModel)]="recipe.mainIngredient"></ion-input>
+            <ion-input type="hidden" name="mainIngredient" [(ngModel)]="recipe.mainIngredient"></ion-input>
             <ion-label text-wrap>{{ recipe.ingredients }}</ion-label>
         </button>
 

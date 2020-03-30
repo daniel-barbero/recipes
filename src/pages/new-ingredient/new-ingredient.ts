@@ -15,6 +15,8 @@ export class NewIngredientPage {
     cssClass: 'option-categories page-new-ingredient'
   };
 
+  formText:any = []; 
+
   categoria:string;
   public categories;
   arrayCategories = [];
@@ -91,7 +93,12 @@ export class NewIngredientPage {
                   this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
               }
               else {
-                  this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')), this.categoriaSelected);
+                  //this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')), this.categoriaSelected);
+                  this.formText.name = ''; this.showElement = null;
+                  this.getIngredients();
+                  setTimeout( () => {
+                        this.categorySelected(this.categoria);
+                  }, 300)
               }    
           },
           error => {
@@ -132,6 +139,7 @@ export class NewIngredientPage {
             {
               text: 'Ok',
               handler: () => {
+                  this.showElement = null;
                   this.getIngredients();
                   setTimeout( () => {
                         this.categorySelected(this.categoria);
@@ -159,6 +167,7 @@ export class NewIngredientPage {
                         this.onAlertError(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')));
                     }
                     else {
+                        this.showElement = null;
                         this.onAlertSuccess(result.substring(result.lastIndexOf(':')+2, result.lastIndexOf('"')), this.categoriaSelected);
                     }    
                   });

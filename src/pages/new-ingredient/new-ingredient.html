@@ -11,7 +11,7 @@
               <ion-col>
                   <ion-item class="categoryItem">
                       <ion-label>Categorías</ion-label>
-                      <ion-select name="categoria" placeholder="Categoría" ngModel required text-center
+                      <ion-select name="categoria" placeholder="Categoría" [(ngModel)]="formText.categoria" required text-center
                       (ionChange)="categorySelected($event)" 
                       interface="action-sheet"
                       [selectOptions]="selectCategories">
@@ -22,7 +22,7 @@
                   </ion-item>
                   
                   <ion-item>
-                      <ion-input type="text" name="name" placeholder="Ingrediente" ngModel required></ion-input>
+                      <ion-input type="text" name="name" placeholder="Ingrediente" [(ngModel)]="formText.name" required></ion-input>
                   </ion-item>
               </ion-col>
           </ion-row>

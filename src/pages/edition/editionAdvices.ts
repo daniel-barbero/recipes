@@ -58,6 +58,7 @@ export class EditionAdvices implements OnInit {
     }
 
     reorderItems(indexes) {
+        console.log(indexes);
         this.arrayElements = reorderArray(this.arrayElements, indexes);
         console.log('ngOnInit EDITION: ' + this.arrayElements);
     }

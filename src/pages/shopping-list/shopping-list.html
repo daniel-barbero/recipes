@@ -11,9 +11,9 @@
         (ionInput)="onSearchInput(searchTerm)">
     </ion-searchbar>
 
-    <form #f="ngForm" (ngSubmit)="addItem(f)">
-      <ion-grid>
-          <ion-row>
+    <!--<form #f="ngForm" (ngSubmit)="addItem(f)"> -->
+      <ion-grid class="form">
+          <!--<ion-row>
               <ion-item ion-col col-8>
                 <ion-input type="text" name="name" placeholder="Ingrediente" [(ngModel)]="name" required></ion-input>
                 <input type="hidden" name="category" [(ngModel)]="category" />
@@ -27,7 +27,7 @@
               <ion-col col-2 no-padding>
                 <button ion-button type="submit" block [disabled]="!f.valid" float-right>+</button>
               </ion-col>
-          </ion-row>
+          </ion-row> -->
 
           <ion-row *ngIf="ingredientsView?.length">
             <ion-col>
@@ -40,14 +40,16 @@
           </ion-row>
               
       </ion-grid>
-    </form>
+    <!--</form>-->
 
     <ion-list [virtualScroll]="listItems" approxItemHeight="50px">
         <ion-item-sliding *virtualItem="let item; let i = index" #slidingItem>
             <ion-item>
                 <span class="regularFont colorPrimary">{{ item.amount }}</span>
                 <span class="regularFont colorPrimary" [ngClass]="{'bold': item.urgencia == 'SI'}">{{ item.name }}</span>
-                <button ion-button item-end (click)="removeItem(i, 'index')"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                <button ion-button item-end (click)="updateItem(i, item, 'less')"><ion-icon name="remove"></ion-icon></button>
+                <button ion-button item-end (click)="updateItem(i, item, 'more')"><ion-icon name="add"></ion-icon></button>
+                <button ion-button item-end (click)="removeItem(i, 'index')" color="danger"><ion-icon name="ios-trash-outline"></ion-icon></button>
             </ion-item>
 
             <ion-item-options side="right">

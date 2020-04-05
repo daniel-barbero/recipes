@@ -61,6 +61,27 @@ export class ShoppingListPage {
       this.loadItems();
   }
 
+  updateItem(index: number, item: ListItems, action: string) {
+    console.log(item.amount);
+    let calculate: number;
+
+    if ( action == 'more'){
+      calculate = Number(item.amount) + 1;
+    }
+    else {
+        calculate = Number(item.amount) - 1;
+        
+        if ( calculate == 0) {
+            this.removeItem(index);
+            return false;
+        }
+    }
+    
+    item.amount = calculate;
+    console.log(item.amount);
+    this.listIngredientService.updateItem(index, item);
+}
+
   urgentItem(index: number, ingredient: ListItems, slidingItem: ItemSliding) {
       slidingItem.close();
       console.log(ingredient.urgencia);
@@ -87,6 +108,7 @@ export class ShoppingListPage {
           this.ingredientsView = this.ingredients;
       } 
       else {
+          console.log(this.ingredientsView);
           setTimeout(() => {
               this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
                   return ingredient.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
@@ -97,9 +119,11 @@ export class ShoppingListPage {
 
   selectIngredient(id: number, name: string, cat: string){
       event.preventDefault();
-      this.name = name;
+      this.listIngredientService.addItem(name, 1, 'NO', cat, id);
+      this.loadItems();
+      /*this.name = name;
       this.idIngredient = id;
-      this.category = cat;
+      this.category = cat;*/
 
       this.ingredientsView = [];
       this.searchTerm = '';
@@ -273,7 +297,7 @@ export class ShoppingListPage {
                         }
                         else {
                             this.ingredients = result;
-
+                            console.log(this.ingredients);
                             loadingSpinner.dismiss();
                             this.loadItems();
                         }

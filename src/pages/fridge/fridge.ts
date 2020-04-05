@@ -151,9 +151,8 @@ export class FridgePage {
             return false;
           }
       }
-      
+    
       item.amount = calculate;
-      console.log(item.amount);
       this.slService.updateItem(index, item);
       this.listModified = true;
   }

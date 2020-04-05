@@ -34,7 +34,7 @@ export class PantryPage {
 
   ingredients: Ingredient[];
   ingredientsView: Ingredient[];
-  arrayIngredients = [];
+  public arrayIngredients = [];
 
   public categories;
 
@@ -160,6 +160,7 @@ export class PantryPage {
       this.listItemsView = this.listItems;
       
       console.log(this.listItems);
+      console.log(this.arrayIngredients);
   }
 
   showFooter(){

@@ -1,0 +1,23 @@
+INSTALATION LOCAL ENV
+----------------------
+node -v *******(using node v6.12.2)*********
+npm install ionic cordova -g
+ionic -v
+cordova -v
+
+START
+----------------------
+ionic start nameApp blank / tabs / sidemenu
+
+ionic lab
+ionic serve
+
+ionic cordova run android
+ionic cordova run android --prod –release
+
+ionic build
+ionic cordova prepare android
+
+generar splash / icon
+ionic cordova resources
+"<preference name="AndroidPersistentFileLocation" value="Compatibility" />"

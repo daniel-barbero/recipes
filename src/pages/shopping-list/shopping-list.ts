@@ -25,6 +25,7 @@ export class ShoppingListPage {
 
   searchTerm: string = '';
   searchControl: FormControl;
+  shouldShowCancel: boolean = false;
 
   public objectPantry: ListItems[];
   public objectFreezer: ListItems[];
@@ -52,6 +53,7 @@ export class ShoppingListPage {
       this.listIngredientService.addItem(form.value.name, form.value.amount, 'NO', form.value.category, form.value.idIngredient);
       form.reset({ amount: 1, category: '', idIngredient: 0});
       this.searchTerm = '';
+      this.shouldShowCancel = false;
       this.ingredientsView = [];
       this.loadItems();
   }
@@ -109,6 +111,10 @@ export class ShoppingListPage {
       } 
       else {
           console.log(this.ingredientsView);
+          if (Object.keys(this.ingredientsView).length === 0){
+             this.shouldShowCancel = true;
+             console.log(this.shouldShowCancel);
+          }
           setTimeout(() => {
               this.ingredientsView = this.ingredientsView.filter((ingredient:Ingredient) => {
                   return ingredient.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
@@ -129,6 +135,14 @@ export class ShoppingListPage {
       this.searchTerm = '';
   }
 
+  addNoRegistered(searchTerm){
+    event.preventDefault();
+    this.listIngredientService.addItem(searchTerm, 1, 'NO', 'NR', 0);
+    this.loadItems();
+
+    this.ingredientsView = [];
+    this.searchTerm = '';
+}
 
   // 
   //       SAVE FORM

@@ -8,7 +8,10 @@
 
     <ion-searchbar [(ngModel)]="searchTerm" 
         [formControl]="searchControl" 
-        (ionInput)="onSearchInput(searchTerm)">
+        [showCancelButton]="shouldShowCancel"
+        [cancelButtonText]="'Añadir'"
+        (ionInput)="onSearchInput(searchTerm)"
+        (ionCancel)="addNoRegistered(searchTerm)">
     </ion-searchbar>
 
     <!--<form #f="ngForm" (ngSubmit)="addItem(f)"> -->
